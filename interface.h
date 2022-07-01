@@ -10,4 +10,6 @@ void gotoxy(int x, int y);
 void Caixa(int x, int y, int largura, int altura, int tipo);
 int Menu(int x[], int y[], char opcoes[][51], int n);
 void textcoloreback (int letras, int fundo);
+void LimparTela(int x, int y, int largura, int altura);
+
 #endif // INTEFACE_H_INCLUDE

@@ -58,15 +58,21 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
     if(op == 's' || op == 'S') ops++;
     if(ops < 0) ops = n-1;
     if(ops >= n) ops = 0;
-    if(op == 'd'){
+    if(op == 'd' || op == 'D'){
         tipoCursor(1);
       textcoloreback(WHITE, BLACK);
       return ops;
     }
-  }while(op != 13);
+    if(op == 13)break;
+  }while(op != 27);
     tipoCursor(1);
   textcoloreback(WHITE, BLACK);
   return ops;
-
-
+}
+void LimparTela(int x, int y, int largura, int altura){
+  int i, j;
+  for(i=0;i <= altura+1; i++){
+    gotoxy(x,y+i);
+    for(j=0; j <= largura+1;j++)printf(" ");
+  }
 }

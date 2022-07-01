@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdio.h>
+#include <string.h>
 #include <windows.h>
 #include "utils.h"
 #include "interface.h"
@@ -19,7 +20,6 @@ void Data(){
   tipoCursor(0);
   time_t mytime = time(NULL);
   struct tm tm = *localtime(&mytime);
-  Sleep(60);
   //gotoxy(85, 3);printf("%d : %d : %d",tm.tm_hour,tm.tm_min,tm.tm_sec);
   gotoxy(90, 3);printf("Brasil - %s %d, %d",meses[tm.tm_mon-1], tm.tm_mday, tm.tm_year+1900);
 }
@@ -33,14 +33,37 @@ int getTecla(){
 }
 
 int login(int x, int y){
-  usuario user;
+  usuario adm;
+  strcpy(adm.usuario,"house");
+  strcpy(adm.senha, "wendus");
+  
   gotoxy(x, y);printf("Usuario de acesso: ");
   gotoxy(x, y+2);printf("Digite senha de acesso: ");
-  gotoxy(x, y);printf("Usuario de acesso: ");
-  scanf(" %[^\n]%", user.usuario);
+  while(1){
+    usuario user;
+    int cont = 0;
+    LimparTela(x+19,y, 10,0);
+    LimparTela(x+24,y+2, 10,0);
+    gotoxy(x+19, y); scanf(" %[^\n]", user.usuario);
 
-  gotoxy(x, y+2);printf("Digite senha de acesso: ");
-  scanf("%s", user.senha);
+    fflush(stdin);
+    gotoxy(x+24, y+2);
+    do{
+      user.senha[cont]  = getTecla();
 
-  return 1;
+      if(user.senha[cont] == 8){
+        printf("\b \b");
+        cont--;
+      }
+      else if(user.senha[cont] == 13){
+        user.senha[cont] = '\0';
+        break;
+      }
+      else{
+        putchar('*');
+        cont++;
+      }
+    }while(user.senha[cont] != 1027);
+    if(!(strcmp(adm.usuario, user.usuario)) && !(strcmp(adm.senha, user.senha)))return 1;
+  }
 }
