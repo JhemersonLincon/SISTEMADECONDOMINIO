@@ -5,7 +5,7 @@ typedef struct {
   char senha[51];
 }usuario;
 
-void Data();
+void Data(int x, int y);
 int getTecla();
 int login(int x, int y);
 #endif // UTIL_H_INCLUDE

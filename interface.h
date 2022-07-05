@@ -5,9 +5,8 @@ enum DOS_COLORS {
        LIGHT_GRAY, DARK_GRAY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_CYAN,
        LIGHT_RED, LIGHT_MAGENTA, YELLOW, WHITE };
 void gotoxy(int x, int y);
-
-
-void Caixa(int x, int y, int largura, int altura, int tipo);
+void Rolavel(int vetor[], int n,int quant); 
+void Caixa(int x, int y, int largura, int altura, int tipo, int caracter, int fundo);
 int Menu(int x[], int y[], char opcoes[][51], int n);
 void textcoloreback (int letras, int fundo);
 void LimparTela(int x, int y, int largura, int altura);

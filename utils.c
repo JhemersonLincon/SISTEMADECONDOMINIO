@@ -15,13 +15,13 @@ void tipoCursor(int cursor){
   result = SetConsoleCursorInfo(myconsole, &CURSOR);
 
 }
-void Data(){
+void Data(int x, int y){
   char meses[][51] = {"Janeiro", "Fevereiro", "Março", "Abril", "Junho", "Julho", "Agosto", "Setembro", "Outubro","Novembro", "Dezembro"};
   tipoCursor(0);
   time_t mytime = time(NULL);
   struct tm tm = *localtime(&mytime);
   //gotoxy(85, 3);printf("%d : %d : %d",tm.tm_hour,tm.tm_min,tm.tm_sec);
-  gotoxy(90, 3);printf("Brasil - %s %d, %d",meses[tm.tm_mon-1], tm.tm_mday, tm.tm_year+1900);
+  gotoxy(x, y);printf("Brasil - %s %d, %d",meses[tm.tm_mon-1], tm.tm_mday, tm.tm_year+1900);
 }
 int getTecla(){
     int ch;
