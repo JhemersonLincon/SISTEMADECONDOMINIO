@@ -8,5 +8,5 @@ typedef struct {
 void Data(int x, int y);
 int getTecla();
 int login(int x, int y);
-void totalMoradores(int moradores);
+void totalGetMoradores();
 #endif // UTIL_H_INCLUDE

@@ -4,15 +4,16 @@
 #include <time.h>
 #include "interface.h"
 #include "utils.h"
+#include "moradores.h"
 
 int main()
 {
-  int tMoradores = 4;
+  int tmoradores = 0;
   areaInterface();
-
-  totalMoradores(tMoradores);
+  totalGetMoradores();
+  //login(30, 14);
   //login(30,14);
-  Caixa(75, 7, 40, 17, 0,LIGHT_CYAN, BLACK);
+  Caixa(75, 6, 40, 17, 0,LIGHT_CYAN, BLACK);
   areaMenu();
   getche();
   return 0;

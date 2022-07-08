@@ -1,4 +1,4 @@
-#if !defined(MORADORES_H_INCLUDE)
+#ifndef MORADORES_H_INCLUDE
 #define MORADORES_H_INCLUDE
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,13 +25,12 @@ typedef struct{
 
 }Morador;
 
+
 Apartamento CadastrarAp(int num, double tamanho, int comodos, int dips, double aluguel);
-
-Morador CadastrarMorador();
-
+Morador cadastrarMorador(int x, int y);
 void ImprimirApartamento(Apartamento apartamento[], int N);
-
-void ImprimirMorador(Morador morador[], int n);
-
+void ImprimirMorador(int x, int y, Morador morador[], int n, int pos);
 void areaMoradores(int x, int y);
+int getMoradores();
+void pesquisaMoradores();
 #endif 

@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <time.h>
 #include "interface.h"
+#include "moradores.h"
 void gotoxy(int x, int y){
   COORD c;
   c.X = x;
@@ -56,8 +57,9 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
     }
 
     op = getTecla();
-    if(op == 'w' || op == 'W') ops--;
-    if(op == 's' || op == 'S') ops++;
+    gotoxy(30,15);printf("%d", op);
+    if(op == 'w' || op == 'W'|| op == 48) ops--;
+    if(op == 's' || op == 'S' || op == 56) ops++;
     if(ops < 0) ops = n-1;
     if(ops >= n) ops = 0;
     if(op == 'd' || op == 'D'){
@@ -65,10 +67,10 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
       textcoloreback(WHITE, BLACK);
       return ops;
     }
-    if(op == 27){
+    if(op == TEC_ESC){
       return -1;
     }
-  }while(op != 13);
+  }while(op != TEC_ENTER);
     tipoCursor(1);
   textcoloreback(WHITE, BLACK);
   return ops;
@@ -119,7 +121,7 @@ void areaMenu(){
 
   int opcao;
   int x[] = {4 ,4, 4, 4};
-  int y[] = {6, 10, 14, 18};
+  int y[] = {8, 12, 16, 20};
   char op[][51] = {"MORADORES", "APARTAMENTOS", "OCORRENCIA","ADMINISTRADOR"};
   do{
 
@@ -129,7 +131,6 @@ void areaMenu(){
       areaMoradores(x[opcao], y[opcao]);
     }
   }while(opcao != -1);
-  
 
 
 }

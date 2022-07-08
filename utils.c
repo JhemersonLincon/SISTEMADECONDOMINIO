@@ -74,8 +74,10 @@ int login(int x, int y){
   }
 }
 
-void totalMoradores(int moradores){
-  Caixa(80, 4, 30, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
+void totalGetMoradores(){
+
+  Caixa(84, 3, 30, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
-  gotoxy(89, 5);printf("Moradores: %d", moradores);
+  gotoxy(94, 4);printf("Moradores: %d\n", getTotalMoradores());
+  textcoloreback(LIGHT_CYAN, BLACK);
 }
