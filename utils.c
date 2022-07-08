@@ -33,21 +33,23 @@ int getTecla(){
 }
 
 int login(int x, int y){
+  Caixa(x-2,y-7,70,14,0, LIGHT_CYAN, BLACK);
+  Caixa(x,y-5,65,0,0, LIGHT_CYAN, LIGHT_CYAN);
   usuario adm;
   strcpy(adm.usuario,"house");
   strcpy(adm.senha, "wendus");
   
   gotoxy(x, y);printf("Usuario de acesso: ");
-  gotoxy(x, y+2);printf("Digite senha de acesso: ");
+  gotoxy(x, y+3);printf("Digite senha de acesso: ");
   while(1){
     usuario user;
     int cont = 0;
     LimparTela(x+19,y, 10,0);
-    LimparTela(x+24,y+2, 10,0);
+    LimparTela(x+24,y+3, 10,0);
     gotoxy(x+19, y); scanf(" %[^\n]", user.usuario);
 
     fflush(stdin);
-    gotoxy(x+24, y+2);
+    gotoxy(x+24, y+3);
     do{
       user.senha[cont]  = getTecla();
 
@@ -64,6 +66,16 @@ int login(int x, int y){
         cont++;
       }
     }while(user.senha[cont] != 1027);
-    if(!(strcmp(adm.usuario, user.usuario)) && !(strcmp(adm.senha, user.senha)))return 1;
+
+    if(!(strcmp(adm.usuario, user.usuario)) && !(strcmp(adm.senha, user.senha))){
+      LimparTela(x-2,y-7,70,14);
+      return 1;
+    }
   }
+}
+
+void totalMoradores(int moradores){
+  Caixa(80, 4, 30, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
+  textcoloreback(BLACK, LIGHT_CYAN);
+  gotoxy(89, 5);printf("Moradores: %d", moradores);
 }

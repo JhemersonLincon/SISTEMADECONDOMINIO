@@ -4,20 +4,16 @@
 #include <time.h>
 #include "interface.h"
 #include "utils.h"
-int logado = 0;
+
 int main()
 {
-  Caixa(1, 1, 115, 26, 1, LIGHT_CYAN, BLACK);//Caixa principal
-  Caixa(1, 0, 115, 1,  1,LIGHT_CYAN, BLACK);//caixa do cabeçalho
+  int tMoradores = 4;
+  areaInterface();
 
-  Caixa(28, 5, 45, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
-  Caixa(75, 5, 40, 17, 0,LIGHT_CYAN, BLACK);
-
-  Data(90, 1);
-  gotoxy(3, 0);printf("SISTEMA DE CONDOMINIO");
-  int x[] = {4 ,4, 4, 4, 4};
-  int y[] = {6, 10, 14, 18, 22};
-  int opcao;
+  totalMoradores(tMoradores);
+  //login(30,14);
+  Caixa(75, 7, 40, 17, 0,LIGHT_CYAN, BLACK);
+  areaMenu();
   getche();
   return 0;
 }
