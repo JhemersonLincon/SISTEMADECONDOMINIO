@@ -57,7 +57,6 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
     }
 
     op = getTecla();
-    gotoxy(30,15);printf("%d", op);
     if(op == 'w' || op == 'W'|| op == 48) ops--;
     if(op == 's' || op == 'S' || op == 56) ops++;
     if(ops < 0) ops = n-1;
