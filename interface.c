@@ -10,11 +10,11 @@ void gotoxy(int x, int y){
   c.Y = y;
  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
-
-void textcoloreback (int letras, int fundo){/*para mudar a cor de fundo mude o background*/
+/*para mudar a cor de fundo mude o background*/
+void textcoloreback (int letras, int fundo){
     SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE),letras + (fundo << 4));
 }
-
+// Criação das caixas
 void Caixa(int x, int y, int largura, int altura,int tipo, int letra, int fundo){
   int i, j;
   unsigned char C[][6] = {{218, 196, 191, 179, 192, 217},
@@ -33,16 +33,14 @@ void Caixa(int x, int y, int largura, int altura,int tipo, int letra, int fundo)
   printf("%c\n", C[tipo][5]);
   textcoloreback(WHITE, BLACK); 
 }
-
-
-
-
+// Menu de opções
 int Menu(int x[], int y[], char opcoes[][51], int n){
+
   int i;
   char op;
   int ops = 0;
   do{ 
-
+      tipoCursor(0);  
     for(i = 0; i < n;i++){
       if(ops == i){
         Caixa(x[i]-1,y[i]-1, 20, 1, 0, LIGHT_CYAN, LIGHT_CYAN);
@@ -62,7 +60,6 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
     if(ops < 0) ops = n-1;
     if(ops >= n) ops = 0;
     if(op == 'd' || op == 'D'){
-      tipoCursor(1);
       textcoloreback(WHITE, BLACK);
       return ops;
     }
@@ -70,14 +67,10 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
       return -1;
     }
   }while(op != TEC_ENTER);
-    tipoCursor(1);
   textcoloreback(WHITE, BLACK);
   return ops;
 }
-
-
-
-
+//limpar a tela sem piscar
 void LimparTela(int x, int y, int largura, int altura){
   int i, j;
   for(i=0;i <= altura+1; i++){
@@ -85,7 +78,7 @@ void LimparTela(int x, int y, int largura, int altura){
     for(j=0; j <= largura+1;j++)printf(" ");
   }
 }
-
+//Não sendo utilizado
 void Rolavel(int vetor[], int n,int quant){
   int i, pos = 0, aux = 0;
   char teclado;
@@ -102,20 +95,14 @@ void Rolavel(int vetor[], int n,int quant){
     if(pos > n-5)pos = 0;
   }while(teclado != 27);
 } 
-
-
-
-
+// interface inicial
 void areaInterface(){
   Caixa(1, 1, 115, 26, 1, LIGHT_CYAN, BLACK);//Caixa principal
   Caixa(1, 0, 115, 1,  1,LIGHT_CYAN, BLACK);//caixa do cabeçalho
-
-
   Data(90, 1);
-  gotoxy(3, 0);printf("SISTEMA DE CONDOMINIO");
+  gotoxy(3, 1);printf("SISTEMA DE CONDOMINIO");
 }
-
-
+// funcao da area do Menu
 void areaMenu(){
 
   int opcao;
@@ -123,7 +110,7 @@ void areaMenu(){
   int y[] = {8, 12, 16, 20};
   char op[][51] = {"MORADORES", "APARTAMENTOS", "OCORRENCIA","ADMINISTRADOR"};
   do{
-
+    LimparTela(28, 6, 45, 17);
     opcao = Menu(x, y, op, 4);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
     if(opcao == 0){

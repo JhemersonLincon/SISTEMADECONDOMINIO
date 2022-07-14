@@ -8,13 +8,13 @@
 
 int main()
 {
-  int tmoradores = 0;
+  login(30, 14);
   areaInterface();
   totalGetMoradores();
-  //login(30, 14);
   //login(30,14);
   Caixa(75, 6, 40, 17, 0,LIGHT_CYAN, BLACK);
   areaMenu();
+
   getche();
   return 0;
 }
