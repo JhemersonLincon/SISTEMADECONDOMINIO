@@ -9,7 +9,6 @@ Projeto acâdemico sobre a criação de sistema para gerenciar conjuntos residen
 - Registro de Pagamento
 - apartamentos vagos
 - Ocorrencia de infração
-- Temas dark e light
 
 ## Aprendizados
 

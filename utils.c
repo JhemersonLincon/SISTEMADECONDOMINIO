@@ -57,7 +57,7 @@ int login(int x, int y){
     do{
       user.senha[cont]  = getTecla();
 
-      if(user.senha[cont] == 8){
+      if(user.senha[cont] == 8 && cont > 0){
         printf("\b \b");
         cont--;
       }
@@ -65,11 +65,11 @@ int login(int x, int y){
         user.senha[cont] = '\0';
         break;
       }
-      else{
+      else if(user.senha[cont] != 8){
         putchar('*');
         cont++;
       }
-    }while(user.senha[cont] != 1027);
+    }while(user.senha[cont] != 27);
     for(i = 0; i <  tAdm; i++){
       if(!(strcmp(adm[i].usuario, user.usuario)) && !(strcmp(adm[i].senha, user.senha))){
         LimparTela(x-2,y-7,70,14);

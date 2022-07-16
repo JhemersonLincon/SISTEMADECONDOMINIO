@@ -104,19 +104,17 @@ void areaInterface(){
 }
 // funcao da area do Menu
 void areaMenu(){
-
   int opcao;
-  int x[] = {4 ,4, 4, 4};
-  int y[] = {8, 12, 16, 20};
-  char op[][51] = {"MORADORES", "APARTAMENTOS", "OCORRENCIA","ADMINISTRADOR"};
+  int x[] = {4 ,4, 4, 4, 4};
+  int y[] = {7, 11, 15, 19,23};
+  char op[][51] = {"MORADORES", "APARTAMENTOS", "PAGAMENTOS", "OCORRENCIA","ADMINISTRADOR"};
   do{
     LimparTela(28, 6, 45, 17);
-    opcao = Menu(x, y, op, 4);
+    opcao = Menu(x, y, op, 5);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
     if(opcao == 0){
       areaMoradores(x[opcao], y[opcao]);
     }
   }while(opcao != -1);
-
-
+  
 }
