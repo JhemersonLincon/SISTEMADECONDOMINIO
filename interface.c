@@ -115,6 +115,9 @@ void areaMenu(){
     if(opcao == 0){
       areaMoradores(x[opcao], y[opcao]);
     }
+    else if(opcao == 1){
+      areaApartamento(x[opcao], y[opcao]);
+    }
   }while(opcao != -1);
   
 }

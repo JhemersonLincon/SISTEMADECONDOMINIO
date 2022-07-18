@@ -1,24 +1,131 @@
 #include "apartamentos.h"
 
-int tApartamentos = 4;
+int tApartamentos = 0;
 Apartamento apartamentos[100];
 
-Apartamento cadastrarAp(int num, double tamanho, int comodos, int dips, double aluguel){
-  Apartamento apartamento;
-  apartamento.num = num;
-  apartamento.tamanho = tamanho;
-  apartamento.comodos = comodos;
-  apartamento.disp = aluguel;
-  return apartamento;
+Apartamento cadastrarAp(int x, int y){
+  Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
+  textcoloreback(BLACK, LIGHT_CYAN);
+  gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
+  char tecla;
+  do{
+    textcoloreback(WHITE, BLACK);
+    tipoCursor(1);
+    Apartamento apartamento;
+    gotoxy(x, y);  printf("Numero:                           ");
+    gotoxy(x, y+2);printf("Tamanho:                          ");
+    gotoxy(x, y+4);printf("Quant de comodos:                           ");                        
+    gotoxy(x, y+6);printf("Disponibilidade:   ");
+    gotoxy(x, y+8);printf("Preco do Aluguel:                       ");  
+
+    gotoxy(x, y);   printf("Numero:");                  scanf("%d", &apartamento.num);
+    gotoxy(x, y+2); printf("Tamanho:");                 scanf("%lf", &apartamento.tamanho);
+    gotoxy(x, y+4); printf("Quant de comodos:");        scanf("%d", &apartamento.comodos);
+    gotoxy(x, y+6); printf("Disponibilidade:");         scanf("%d", &apartamento.disp);
+    gotoxy(x, y+8); printf("Preco do Aluguel:");        scanf("%lf", &apartamento.disp);
+    apartamentos[tApartamentos] = apartamento;
+    tApartamentos++;
+    totalGetMoradores();
+    gotoxy(x, y+12);printf("Digite ESC para sair...");
+    //textcoloreback(WHITE, BLACK);
+    tecla = getch();
+    LimparTela(x,y-1, 40, 10);
+  }while(tecla != 27);
+
 }
 
-void ImprimirApartamento(Apartamento apartamento[], int N){
+void ImprimirApartamento(int x, int y, Apartamento apartamentos[], int N, int pos){
   int i;
-  for(i=0; i<N; i++){
-      printf("\n%d", apartamento[i].num);
-      printf("\n%lf", apartamento[i].tamanho);
-      printf("\n%d", apartamento[i].comodos);
-      printf("\n%d", apartamento[i].disp);
-      printf("\n%d", apartamento[i].aluguel);
+  if(N == 0){
+    gotoxy(x, y);  printf("Numero: ");                        printf("%d", apartamentos[pos].num);
+    gotoxy(x, y+2);printf("Tamanho: ");                       printf("%lf", apartamentos[pos].tamanho);
+    gotoxy(x, y+4);printf("Quant de comodos: ");                         printf("%d", apartamentos[pos].comodos);                     
+    gotoxy(x, y+6);printf("Disponibilidade: ");printf("%d", apartamentos[pos].disp);
+    gotoxy(x, y+8);printf("Preco do Aluguel: ");                    printf("%lf", apartamentos[pos].aluguel);
+  }
+
+  else{
+    for(i=0; i<N; i++){
+      printf("%c", apartamentos[i].num);
+      printf("%d", apartamentos[i].tamanho);
+      printf("%c", apartamentos[i].comodos);
+      printf("%d", apartamentos[i].disp);
+      printf("%c", apartamentos[i].aluguel);
+      }
   }
 }
+
+void areaApartamento(int x, int y){
+  int xO[] = {x+24, x+24, x+24};
+  int yO[] = {y-1, y+2, y+5};
+  char opO[][51] = {"CADASTRAR APARTAMENTO", "LISTAR APARTAMENTO", };
+  int opcao = Menu(xO, yO, opO, 2);
+  LimparTela(x+23, y-3, 20, 10);
+  if(opcao != -1)Caixa(28, 6, 45, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
+  switch(opcao){
+    case 0:
+      cadastrarAp(30,10);
+    break;
+    case 1:
+      listarApartamento(apartamentos, tApartamentos);
+    break;
+    default: break;
+    }
+}
+
+void listarApartamento(Apartamento apartamentos[], int total){
+  int op = -1;
+  char tecla;
+  do{
+    if(tApartamentos) op = selecaoApartamento(28, 6, 45, 17, apartamentos, tApartamentos, 0);
+    else {gotoxy(37, 7);printf("Nao a apartamento cadastrados");}
+    LimparTela(30,10, 40, 5);
+    if(op != -1) ImprimirApartamento(30, 10, apartamentos, 0, op );
+    gotoxy(30, 22);printf("Digite ESC para sair...");
+    tecla = getch();
+    }while(tecla != 27);
+}
+
+int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao){
+Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
+
+Caixa(30,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
+textcoloreback(BLACK, LIGHT_CYAN);
+gotoxy(30+11,10-3);printf("LISTA DE MORADORES");
+textcoloreback(WHITE, BLACK);
+char tecla;
+int i;
+  int primeiro = 0;
+  textcoloreback(WHITE, BLACK);
+  for(i = 0; i < total; i++){
+
+      gotoxy(x+1, y+4+i);printf("%*s",-larg, apartamentos[primeiro+i].num);
+  }
+  do{
+    textcoloreback(BLACK, LIGHT_CYAN);
+    gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].tamanho);
+
+    tecla = getTecla();
+    textcoloreback(WHITE, BLACK);
+    gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].comodos);
+    if(tecla == 's')opcao++;
+    if(tecla == 'w')opcao--;
+    if(tecla == 13)return opcao;
+    if(opcao < 0) opcao = 0;
+    if(opcao > total-1) opcao = total-1;
+    if(opcao > primeiro + alt-1){
+        primeiro++;
+        for(i = 0; i < alt; i++){
+            gotoxy(x+1, y+1+i);printf("%*s",-larg, apartamentos[primeiro+i].disp);
+        }
+    }
+    else if(opcao < primeiro){
+            primeiro--;
+            for(i = 0; i < alt; i++){
+    gotoxy(x+1, y+1+i);printf("%*s",-larg, apartamentos[primeiro+i].aluguel);
+  }
+  }
+  }while(1);
+}
+
+

@@ -19,9 +19,7 @@ typedef struct{
 }Morador;
 
 
-Apartamento CadastrarAp(int num, double tamanho, int comodos, int dips, double aluguel);
 Morador cadastrarMorador(int x, int y);
-void ImprimirApartamento(Apartamento apartamento[], int N);
 void ImprimirMorador(int x, int y, Morador morador[], int n, int pos);
 void areaMoradores(int x, int y);
 int getMoradores();

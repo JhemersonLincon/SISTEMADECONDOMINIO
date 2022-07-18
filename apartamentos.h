@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "interface.h"
 #include "utils.h"
+
 typedef struct{ 
   int num;
   double tamanho;
@@ -13,7 +14,10 @@ typedef struct{
   double aluguel;
 }Apartamento;
 
-Apartamento cadastrarAp(int num, double tamanho, int comodos, int dips, double aluguel);
-void ImprimirApartamento(Apartamento apartamento[], int N);
+Apartamento cadastrarAp(int x, int y);
+void ImprimirApartamento(int x, int y, Apartamento apartamentos[], int N, int pos);
+void areaApartamento(int x, int y);
+void listarApartamento(Apartamento apartamentos[], int total);
+int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao);
 
 #endif // APARTAMENTO_H_INCLUDE
