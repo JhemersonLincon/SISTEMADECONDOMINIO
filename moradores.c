@@ -105,7 +105,6 @@ int selecaoMoradores(int x , int y, int larg, int alt,Morador moradores[], int t
     int primeiro = 0;
     textcoloreback(WHITE, BLACK);
     for(i = 0; i < total; i++){
-
         gotoxy(x+1, y+4+i);printf("%*s",-larg, moradores[primeiro+i].dono);
     }
     do{

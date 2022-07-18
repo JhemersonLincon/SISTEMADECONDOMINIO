@@ -12,11 +12,11 @@ Apartamento cadastrarAp(int x, int y){
     textcoloreback(WHITE, BLACK);
     tipoCursor(1);
     Apartamento apartamento;
-    gotoxy(x, y);  printf("Numero:                           ");
-    gotoxy(x, y+2);printf("Tamanho:                          ");
-    gotoxy(x, y+4);printf("Quant de comodos:                           ");                        
-    gotoxy(x, y+6);printf("Disponibilidade:   ");
-    gotoxy(x, y+8);printf("Preco do Aluguel:                       ");  
+    gotoxy(x, y);  printf("Numero:                         ");
+    gotoxy(x, y+2);printf("Tamanho:                        ");
+    gotoxy(x, y+4);printf("Quant de comodos:               ");                        
+    gotoxy(x, y+6);printf("Disponibilidade:                ");
+    gotoxy(x, y+8);printf("Preco do Aluguel:               ");  
 
     gotoxy(x, y);   printf("Numero:");                  scanf("%d", &apartamento.num);
     gotoxy(x, y+2); printf("Tamanho:");                 scanf("%lf", &apartamento.tamanho);
@@ -67,62 +67,62 @@ void areaApartamento(int x, int y){
       cadastrarAp(30,10);
     break;
     case 1:
-      listarApartamento(apartamentos, tApartamentos);
+      listarApartamento(30, 10);
     break;
     default: break;
     }
 }
 
-void listarApartamento(Apartamento apartamentos[], int total){
+void listarApartamento(int x, int y){
   int op = -1;
   char tecla;
   do{
-    if(tApartamentos) op = selecaoApartamento(28, 6, 45, 17, apartamentos, tApartamentos, 0);
-    else {gotoxy(37, 7);printf("Nao a apartamento cadastrados");}
-    LimparTela(30,10, 40, 5);
-    if(op != -1) ImprimirApartamento(30, 10, apartamentos, 0, op );
+    if(tApartamentos) op = selecaoApartamento(x-2, y-4, 45, 17, apartamentos, tApartamentos, 0);
+    else{gotoxy(37, 7);printf("Nao a apartamento cadastrados");}
+    LimparTela(x, y, 40, 5);
+    if(op != -1) ImprimirApartamento(x, y, apartamentos, 0, op );
     gotoxy(30, 22);printf("Digite ESC para sair...");
     tecla = getch();
-    }while(tecla != 27);
+  }while(tecla != 27);
 }
 
 int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao){
-Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
-
-Caixa(30,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
-textcoloreback(BLACK, LIGHT_CYAN);
-gotoxy(30+11,10-3);printf("LISTA DE MORADORES");
-textcoloreback(WHITE, BLACK);
-char tecla;
-int i;
+  Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
+  Caixa(30,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
+  textcoloreback(BLACK, LIGHT_CYAN);
+  gotoxy(30+11,10-3);printf("LISTA DE APARTAMENTOS");
+  textcoloreback(WHITE, BLACK);
+  char tecla;
+  int i;
   int primeiro = 0;
   textcoloreback(WHITE, BLACK);
+  
   for(i = 0; i < total; i++){
-
-      gotoxy(x+1, y+4+i);printf("%*s",-larg, apartamentos[primeiro+i].num);
+    gotoxy(x+1, y+4+i);printf("%*d",-larg, apartamentos[primeiro+i].num);
   }
+
   do{
     textcoloreback(BLACK, LIGHT_CYAN);
-    gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].tamanho);
+    gotoxy(x+1, y+4+opcao - primeiro);printf("%*d",-larg, apartamentos[opcao].num);
 
     tecla = getTecla();
     textcoloreback(WHITE, BLACK);
-    gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].comodos);
+    gotoxy(x+1, y+4+opcao - primeiro);printf("%*d",-larg, apartamentos[opcao].num);
     if(tecla == 's')opcao++;
     if(tecla == 'w')opcao--;
-    if(tecla == 13)return opcao;
+    if(tecla == 13) return opcao;
     if(opcao < 0) opcao = 0;
     if(opcao > total-1) opcao = total-1;
     if(opcao > primeiro + alt-1){
         primeiro++;
         for(i = 0; i < alt; i++){
-            gotoxy(x+1, y+1+i);printf("%*s",-larg, apartamentos[primeiro+i].disp);
+            gotoxy(x+1, y+1+i);printf("%*d",-larg, apartamentos[primeiro+i].num);
         }
     }
     else if(opcao < primeiro){
             primeiro--;
             for(i = 0; i < alt; i++){
-    gotoxy(x+1, y+1+i);printf("%*s",-larg, apartamentos[primeiro+i].aluguel);
+    gotoxy(x+1, y+1+i);printf("%*d",-larg, apartamentos[primeiro+i].num);
   }
   }
   }while(1);

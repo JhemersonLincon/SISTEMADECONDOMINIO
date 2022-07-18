@@ -17,7 +17,7 @@ typedef struct{
 Apartamento cadastrarAp(int x, int y);
 void ImprimirApartamento(int x, int y, Apartamento apartamentos[], int N, int pos);
 void areaApartamento(int x, int y);
-void listarApartamento(Apartamento apartamentos[], int total);
+void listarApartamento(int x, int y);
 int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao);
 
 #endif // APARTAMENTO_H_INCLUDE
