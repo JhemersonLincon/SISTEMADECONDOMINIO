@@ -34,8 +34,9 @@ void Caixa(int x, int y, int largura, int altura,int tipo, int letra, int fundo)
   textcoloreback(WHITE, BLACK); 
 }
 // Menu de opções
-int Menu(int x[], int y[], char opcoes[][51], int n){
-
+int Menu(int x[], int y[], char opcoes[][51], int n, int t){
+  char teclado[][5] = {"wsWS", "adAD"};
+  
   int i;
   char op;
   int ops = 0;
@@ -55,14 +56,10 @@ int Menu(int x[], int y[], char opcoes[][51], int n){
     }
 
     op = getTecla();
-    if(op == 'w' || op == 'W'|| op == 48) ops--;
-    if(op == 's' || op == 'S' || op == 56) ops++;
+    if(op == teclado[t][0] || op == teclado[t][2] || op == 48) ops--;
+    if(op == teclado[t][1] || op == teclado[t][3] || op == 56) ops++;
     if(ops < 0) ops = n-1;
     if(ops >= n) ops = 0;
-    if(op == 'd' || op == 'D'){
-      textcoloreback(WHITE, BLACK);
-      return ops;
-    }
     if(op == TEC_ESC){
       return -1;
     }
@@ -78,23 +75,6 @@ void LimparTela(int x, int y, int largura, int altura){
     for(j=0; j <= largura+1;j++)printf(" ");
   }
 }
-//Não sendo utilizado
-void Rolavel(int vetor[], int n,int quant){
-  int i, pos = 0, aux = 0;
-  char teclado;
-  do{
-    for( i = pos; i < quant+pos;i++){
-      gotoxy(1, 2+aux+1);printf("%d", vetor[i]);
-      aux++;
-    }
-    aux = 0;
-    teclado = getch();
-    if(teclado == 'w')pos--;
-    else if(teclado == 's')pos++;
-    if(pos < 0)pos = n > 5? n-5: 0;
-    if(pos > n-5)pos = 0;
-  }while(teclado != 27);
-} 
 // interface inicial
 void areaInterface(){
   Caixa(1, 1, 115, 26, 1, LIGHT_CYAN, BLACK);//Caixa principal
@@ -110,7 +90,7 @@ void areaMenu(){
   char op[][51] = {"MORADORES", "APARTAMENTOS", "PAGAMENTOS", "OCORRENCIA","ADMINISTRADOR"};
   do{
     LimparTela(28, 6, 45, 17);
-    opcao = Menu(x, y, op, 5);
+    opcao = Menu(x, y, op, 5, 0);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
     switch(opcao){
       case 0:

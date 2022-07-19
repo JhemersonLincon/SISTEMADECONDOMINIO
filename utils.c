@@ -123,6 +123,7 @@ int selecao(int x , int y, int larg, int alt, char opcoes[][101], int n, int opc
     }while(1);
 }
 void cpfLimpo(char cpf[]){
+
   int i;
   for(i=0;i < 15 ; i++){
     if(i == 3 || i == 7)cpf[i] = '.';
@@ -142,4 +143,13 @@ void cpfLimpo(char cpf[]){
 
     else printf("%c", cpf[i]);
   }
+}
+
+
+int sairCadastrar(int x, int y){
+  int xO[] = {x, x+20};
+  int yO[] = {y+12, y+12};
+  char op[][51] = {"CADASTRAR MAIS", "SAIR"};
+  int opcao = Menu(xO, yO, op, 2, 1);
+  return opcao;
 }

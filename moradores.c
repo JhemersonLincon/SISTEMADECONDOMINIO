@@ -11,6 +11,7 @@ Morador cadastrarMorador(int x, int y){
     Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
     gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
+    int opcao;
     char tecla;
     do{
         textcoloreback(WHITE, BLACK);
@@ -30,11 +31,9 @@ Morador cadastrarMorador(int x, int y){
         moradores[tMoradores] = morador;
         tMoradores++;
         totalGetMoradores();
-        gotoxy(x, y+12);printf("Digite ESC para sair...");
-        //textcoloreback(WHITE, BLACK);
-        tecla = getch();
-        LimparTela(x,y-1, 40, 10);
-    }while(tecla != 27);
+        opcao = sairCadastrar(x, y);
+        LimparTela(x-1,y-1, 40, 13);
+    }while(opcao == 0 );
 }
 // mostra na tela o morador selecionado ou a lista inteira
 void ImprimirMorador(int x, int y, Morador morador[], int N, int pos){
@@ -63,7 +62,7 @@ void areaMoradores(int x, int y){
     int xO[] = {x+24, x+24, x+24};
     int yO[] = {y-1, y+2, y+5};
     char opO[][51] = {"CADASTRAR MORADORES", "LISTAR MORADORES", "PESQUISAR MORADOR"};
-    int opcao = Menu(xO, yO, opO, 3);
+    int opcao = Menu(xO, yO, opO, 3, 0);
     LimparTela(x+23, y-3, 20, 10);
     if(opcao != -1)Caixa(28, 6, 45, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
     switch(opcao){
