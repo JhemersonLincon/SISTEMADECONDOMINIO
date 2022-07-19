@@ -161,3 +161,6 @@ void pesquisaMoradores(int x, int y){
         tecla = getch();
     }while(tecla != 27);
 }
+
+
+// Ocorrencias 

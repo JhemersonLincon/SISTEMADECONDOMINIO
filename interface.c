@@ -112,12 +112,19 @@ void areaMenu(){
     LimparTela(28, 6, 45, 17);
     opcao = Menu(x, y, op, 5);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
-    if(opcao == 0){
-      areaMoradores(x[opcao], y[opcao]);
+    switch(opcao){
+      case 0:
+        areaMoradores(x[opcao], y[opcao]);
+        break;
+      case 1:
+        areaApartamento(x[opcao], y[opcao]);
+        break;
+      case 3:
+        areaOcorrencia(x[opcao], y[opcao]);
+        break;
+      default: break;
     }
-    else if(opcao == 1){
-      areaApartamento(x[opcao], y[opcao]);
-    }
+
   }while(opcao != -1);
   
 }

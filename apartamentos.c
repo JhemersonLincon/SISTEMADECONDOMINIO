@@ -3,7 +3,7 @@
 int tApartamentos = 0;
 Apartamento apartamentos[100];
 
-Apartamento cadastrarAp(int x, int y){
+void cadastrarAp(int x, int y){
   Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
   gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
@@ -19,10 +19,10 @@ Apartamento cadastrarAp(int x, int y){
     gotoxy(x, y+8);printf("Preco do Aluguel:               ");  
 
     gotoxy(x, y);   printf("Numero:");                  scanf("%d", &apartamento.num);
-    gotoxy(x, y+2); printf("Tamanho:");                 scanf("%lf", &apartamento.tamanho);
+    gotoxy(x, y+2); printf("Tamanho:");                 scanf("%.2lf", &apartamento.tamanho);
     gotoxy(x, y+4); printf("Quant de comodos:");        scanf("%d", &apartamento.comodos);
     gotoxy(x, y+6); printf("Disponibilidade:");         scanf("%d", &apartamento.disp);
-    gotoxy(x, y+8); printf("Preco do Aluguel:");        scanf("%lf", &apartamento.disp);
+    gotoxy(x, y+8); printf("Preco do Aluguel:");        scanf("%.2lf", &apartamento.aluguel);
     apartamentos[tApartamentos] = apartamento;
     tApartamentos++;
     totalGetMoradores();
@@ -39,9 +39,9 @@ void ImprimirApartamento(int x, int y, Apartamento apartamentos[], int N, int po
   if(N == 0){
     gotoxy(x, y);  printf("Numero: ");                        printf("%d", apartamentos[pos].num);
     gotoxy(x, y+2);printf("Tamanho: ");                       printf("%lf", apartamentos[pos].tamanho);
-    gotoxy(x, y+4);printf("Quant de comodos: ");                         printf("%d", apartamentos[pos].comodos);                     
-    gotoxy(x, y+6);printf("Disponibilidade: ");printf("%d", apartamentos[pos].disp);
-    gotoxy(x, y+8);printf("Preco do Aluguel: ");                    printf("%lf", apartamentos[pos].aluguel);
+    gotoxy(x, y+4);printf("Quant de comodos: ");              printf("%d", apartamentos[pos].comodos);                     
+    gotoxy(x, y+6);printf("Disponibilidade: ");               printf("%d", apartamentos[pos].disp);
+    gotoxy(x, y+8);printf("Preco do Aluguel: ");              printf("%lf", apartamentos[pos].aluguel);
   }
 
   else{
@@ -79,7 +79,7 @@ void listarApartamento(int x, int y){
   do{
     if(tApartamentos) op = selecaoApartamento(x-2, y-4, 45, 17, apartamentos, tApartamentos, 0);
     else{gotoxy(37, 7);printf("Nao a apartamento cadastrados");}
-    LimparTela(x, y, 40, 5);
+    LimparTela(x-1, y, 40, 5);
     if(op != -1) ImprimirApartamento(x, y, apartamentos, 0, op );
     gotoxy(30, 22);printf("Digite ESC para sair...");
     tecla = getch();
