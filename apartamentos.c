@@ -19,10 +19,10 @@ void cadastrarAp(int x, int y){
     gotoxy(x, y+8);printf("Preco do Aluguel:               ");  
 
     gotoxy(x, y);   printf("Numero:");                  scanf("%d", &apartamento.num);
-    gotoxy(x, y+2); printf("Tamanho:");                 scanf("%.2lf", &apartamento.tamanho);
+    gotoxy(x, y+2); printf("Tamanho:");                 scanf("%lf", &apartamento.tamanho);
     gotoxy(x, y+4); printf("Quant de comodos:");        scanf("%d", &apartamento.comodos);
     gotoxy(x, y+6); printf("Disponibilidade:");         scanf("%d", &apartamento.disp);
-    gotoxy(x, y+8); printf("Preco do Aluguel:");        scanf("%.2lf", &apartamento.aluguel);
+    gotoxy(x, y+8); printf("Preco do Aluguel:");        scanf("%lf", &apartamento.aluguel);
     apartamentos[tApartamentos] = apartamento;
     tApartamentos++;
     totalGetMoradores();
