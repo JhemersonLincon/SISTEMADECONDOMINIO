@@ -23,7 +23,7 @@ Morador cadastrarMorador(int x, int y);
 void ImprimirMorador(int x, int y, Morador morador[], int n, int pos);
 void areaMoradores(int x, int y);
 int getMoradores();
-void listarMoradores(Morador moradores[], int total);
+void listarMoradores(int x, int y);
 void pesquisaMoradores(int x, int y);
 
 #endif 

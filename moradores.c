@@ -12,7 +12,6 @@ Morador cadastrarMorador(int x, int y){
     textcoloreback(BLACK, LIGHT_CYAN);
     gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
     int opcao;
-    char tecla;
     do{
         textcoloreback(WHITE, BLACK);
         tipoCursor(1);
@@ -22,12 +21,15 @@ Morador cadastrarMorador(int x, int y){
         gotoxy(x, y+4);printf("CPF:                            ");                        
         gotoxy(x, y+6);printf("Data de pagamento do aluguel:   ");
         gotoxy(x, y+8);printf("Telefone:                       ");  
+        gotoxy(x, y+10);printf("Apartamento:                    ");  
 
-        gotoxy(x+5, y);                    scanf(" %[^\n]", morador.dono);
-        gotoxy(x+7, y+2);                  scanf(" %d", &morador.idade);
-        gotoxy(x+4, y+4);                  scanf("%s", morador.cpf);
-        gotoxy(x+30, y+6);                 scanf(" %d", &morador.datapagamento);
-        gotoxy(x+10, y+8);                 scanf(" %[^\n]", morador.tel);
+        gotoxy(x, y);  printf("Dono:  ");                        scanf(" %[^\n]", morador.dono);
+        gotoxy(x, y+2);printf("Idade: ");                        scanf(" %d", &morador.idade);
+        gotoxy(x, y+4);printf("CPF: ");                          scanf("%s", morador.cpf);
+        gotoxy(x, y+6);printf("Data de pagamento do aluguel: "); scanf(" %[^\n]", morador.tel);
+        gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %[^\n]", morador.tel);
+        gotoxy(x, y+10);printf("Apartamento: ");                  scanf(" %s", &morador.apartamento.num);
+        morador.apartamento = puxarAp(morador.apartamento);
         moradores[tMoradores] = morador;
         tMoradores++;
         totalGetMoradores();
@@ -70,7 +72,7 @@ void areaMoradores(int x, int y){
             cadastrarMorador(30, 10);
             break;
         case 1:
-            listarMoradores(moradores, tMoradores);
+            listarMoradores(30, 10);
             break;
         case 2:
              pesquisaMoradores(30, 10);
@@ -79,17 +81,16 @@ void areaMoradores(int x, int y){
     }
 }
 //listar Moradores
-void listarMoradores(Morador moradores[], int total){
+void listarMoradores(int x, int y){
     int op = -1;
-    char tecla;
+    int opcao;
     do{
-        if(tMoradores) op = selecaoMoradores(28, 6, 45, 17, moradores, tMoradores, 0);
+        if(tMoradores) op = selecaoMoradores(x-2, y-4, 45, 17, moradores, tMoradores, 0);
         else {gotoxy(37, 7);printf("Nao a moradores cadastrados");}
-        LimparTela(30,10, 40, 5);
-        if(op != -1) ImprimirMorador(30, 10, moradores, 0, op );
-            gotoxy(30, 22);printf("Digite ESC para sair...");
-        tecla = getch();
-    }while(tecla != 27);
+        LimparTela(x,y, 40, 5);
+        if(op != -1) ImprimirMorador(x, y, moradores, 0, op );
+        opcao = sairListar(x, y);
+    }while(opcao == 0);
 }
 // Selecionar o morador na lista de moradores
 int selecaoMoradores(int x , int y, int larg, int alt,Morador moradores[], int total, int opcao){

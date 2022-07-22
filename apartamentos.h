@@ -3,21 +3,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "interface.h"
 #include "utils.h"
 
 typedef struct{ 
-  int num;
+  char num[31];
   double tamanho;
   int comodos;
   int disp;
   double aluguel;
 }Apartamento;
 
+Apartamento puxarAp(Apartamento apartamento);
+void programerAp(char num[], double tamanho, int comodos, int disp, double aluguel);
 void cadastrarAp(int x, int y);
-void ImprimirApartamento(int x, int y, Apartamento apartamentos[], int N, int pos);
+void ImprimirApartamento(int x, int y, Apartamento apartamentos[], int pos);
 void areaApartamento(int x, int y);
 void listarApartamento(int x, int y);
 int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao);
-
+void areaApartamentosLivres(int x, int y);
 #endif // APARTAMENTO_H_INCLUDE

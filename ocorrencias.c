@@ -11,7 +11,7 @@ void areaOcorrencia(int x, int y){
   int yO[] = {y-1, y+2, y+5};
   char opO[][51] = {"CADASTRAR OCORRENCIA", "LISTAR OCORRENCIA"};
   int opcao = Menu(xO, yO, opO, 2, 0);
-  LimparTela(x+23, y-3, 20, 10);
+  LimparTela(x+23, y-3, 20, 5);
   if(opcao != -1)Caixa(28, 6, 87, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
     switch(opcao){
       case 0:
@@ -51,15 +51,14 @@ void cadastrarOcorrencia(int x, int y){
 
 void listarOcorrencia(int x, int y){
   int op = -1;
-  char tecla;
+  int opcao;
   do{
     if(tOcorrencia) op = selecaoOcorrencia(x-2, y-4, 45, 17, ocorrencias, tOcorrencia, 0);
     else{gotoxy(37, 7);printf("Nao a Ocorrencias cadastrados");}
-    LimparTela(x-1, y, 40, 5);
+    LimparTela(x-1, y, 10, 5);
     //if(op != -1) ImprimirApartamento(x, y, ocorrencias, 0, op );
-    gotoxy(30, 22);printf("Digite ESC para sair...");
-    tecla = getch();
-  }while(tecla != 27);
+    opcao = sairListar(x, y);
+  }while(opcao == 0);
 }
 
 int selecaoOcorrencia(int x , int y, int larg, int alt, Ocorrencia ocorrencias[], int total, int opcao){

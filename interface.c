@@ -87,9 +87,10 @@ void areaMenu(){
   int opcao;
   int x[] = {4 ,4, 4, 4, 4};
   int y[] = {7, 11, 15, 19,23};
-  char op[][51] = {"MORADORES", "APARTAMENTOS", "PAGAMENTOS", "OCORRENCIA","ADMINISTRADOR"};
+  char op[][51] = {"MORADORES", "APARTAMENTOS", "PAGAMENTOS", "OCORRENCIA", "ADMINISTRADOR"};
   do{
-    LimparTela(28, 6, 45, 17);
+    LimparTela(28, 6, 87, 17);
+    areaApartamentosLivres(75, 6);
     opcao = Menu(x, y, op, 5, 0);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
     switch(opcao){
@@ -98,6 +99,9 @@ void areaMenu(){
         break;
       case 1:
         areaApartamento(x[opcao], y[opcao]);
+        break;
+      case 2: 
+        areaPagamento(x[opcao], y[opcao]);
         break;
       case 3:
         areaOcorrencia(x[opcao], y[opcao]);

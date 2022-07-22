@@ -153,3 +153,11 @@ int sairCadastrar(int x, int y){
   int opcao = Menu(xO, yO, op, 2, 1);
   return opcao;
 }
+
+int sairListar(int x, int y){
+  int xO[] = {x, x+20};
+  int yO[] = {y+12, y+12};
+  char op[][51] = {"PESQUISAR MAIS", "SAIR"};
+  int opcao = Menu(xO, yO, op, 2, 1);
+  return opcao;
+}
