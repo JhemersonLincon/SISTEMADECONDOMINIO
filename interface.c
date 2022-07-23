@@ -100,15 +100,23 @@ void areaMenu(){
       case 0:
         areaMoradores(x[opcao], y[opcao]);
         break;
+      
       case 1:
         areaApartamento(x[opcao], y[opcao]);
         break;
+      
       case 2: 
         areaPagamento(x[opcao], y[opcao]);
         break;
+      
       case 3:
         areaOcorrencia(x[opcao], y[opcao]);
         break;
+      
+      case 4:
+        areaAdm(x[opcao], y[opcao]); 
+        break;
+      
       default: break;
     }
   }while(opcao != -1);

@@ -7,7 +7,7 @@ int getTotalMoradores(){
     return tMoradores;
 }
 // cadastrar morador - imcompleto
-Morador cadastrarMorador(int x, int y, int op){
+Morador cadastrarMorador(int x, int y){
     Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
     gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
@@ -23,21 +23,21 @@ Morador cadastrarMorador(int x, int y, int op){
         gotoxy(x, y+10);printf("Apartamento:                   ");  
 
         tipoCursor(1);
-        gotoxy(x, y);  printf("Dono: ");                        scanf(" %[^\n]", morador.dono);
+        gotoxy(x, y);  printf("Dono: ");                         scanf(" %[^\n]", morador.dono);
         gotoxy(x, y+2);printf("Idade: ");                        scanf(" %d", &morador.idade);
         gotoxy(x, y+4);printf("CPF: ");                          scanf(" %s", morador.cpf);
         gotoxy(x, y+6);printf("Data de pagamento: ");            scanf(" %d", &morador.datapagamento);
         gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %s", morador.tel);
         gotoxy(x, y+10);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
-        if(op == 0){
-            morador.apartamento = puxarAp(morador.apartamento);
-            moradores[tMoradores] = morador;
-            tMoradores++;
-        }
+      
+        morador.apartamento = puxarAp(morador.apartamento);
+        moradores[tMoradores] = morador;
+        tMoradores++;
+    
         totalGetMoradores();
         opcao = sairCadastrar(x, y);
         LimparTela(x-1,y-1, 40, 13);
-    }while(opcao == 0 );
+    }while(opcao == 0);
 }
 // mostra na tela o morador selecionado ou a lista inteira
 void ImprimirMorador(int x, int y, Morador morador){
@@ -57,14 +57,14 @@ void areaMoradores(int x, int y){
     if(opcao != -1)Caixa(28, 6, 45, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
     switch(opcao){
         case 0:
-            cadastrarMorador(30, 10, 0);
+            cadastrarMorador(30, 10);
             break;
         case 1:
             listarMoradores(30, 10);
             break;
         case 2:
-             pesquisaMoradores(30, 10);
-             break;
+            pesquisaMoradores(30, 10);
+            break;
         default: break;
     }
 }

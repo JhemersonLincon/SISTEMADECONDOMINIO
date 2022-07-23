@@ -17,7 +17,7 @@ typedef struct{
 }Morador;
 
 
-Morador cadastrarMorador(int x, int y, int op);
+Morador cadastrarMorador(int x, int y);
 void ImprimirMorador(int x, int y, Morador morador);
 void areaMoradores(int x, int y);
 int getMoradores();
