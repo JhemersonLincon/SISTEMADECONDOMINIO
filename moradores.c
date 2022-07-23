@@ -38,26 +38,12 @@ Morador cadastrarMorador(int x, int y){
     }while(opcao == 0 );
 }
 // mostra na tela o morador selecionado ou a lista inteira
-void ImprimirMorador(int x, int y, Morador morador[], int N, int pos){
-    int i;
-    if(N == 0){
-        gotoxy(x, y);  printf("Dono: ");                        printf("%s", morador[pos].dono);
-        gotoxy(x, y+2);printf("Idade: ");                       printf("%d", morador[pos].idade);
-        gotoxy(x, y+4);printf("CPF: ");                         printf("%s", morador[pos].cpf);                     
-        gotoxy(x, y+6);printf("Data de pagamento do aluguel: ");printf("%d", morador[pos].datapagamento);
-        gotoxy(x, y+8);printf("Telefone: ");                    printf("%c", morador[pos].tel);
-    }
-
-    else{
-        for(i=0; i<N; i++){
-            printf("%c", morador[i].dono);
-            printf("%d", morador[i].idade);
-            printf("%c", morador[i].cpf);
-            printf("%d", morador[i].datapagamento);
-            printf("%c", morador[i].tel);
-        }
-    }
-
+void ImprimirMorador(int x, int y, Morador morador){
+    gotoxy(x, y);  printf("Dono: ");                        printf("%s", morador.dono);
+    gotoxy(x, y+2);printf("Idade: ");                       printf("%d", morador.idade);
+    gotoxy(x, y+4);printf("CPF: ");                         printf("%s", morador.cpf);                     
+    gotoxy(x, y+6);printf("Data de pagamento do aluguel: ");printf("%d", morador.datapagamento);
+    gotoxy(x, y+8);printf("Telefone: ");                    printf("%c", morador.tel);
 }
 // area selecionada de moradores
 void areaMoradores(int x, int y){
@@ -88,7 +74,10 @@ void listarMoradores(int x, int y){
         if(tMoradores) op = selecaoMoradores(x-2, y-4, 45, 17, moradores, tMoradores, 0);
         else {gotoxy(37, 7);printf("Nao a moradores cadastrados");}
         LimparTela(x,y, 40, 5);
-        if(op != -1) ImprimirMorador(x, y, moradores, 0, op );
+        if(op != -1) {
+            ImprimirMorador(x, y, moradores[op]);
+            apartamentoEmMorador(75, 6, moradores[op].apartamento);
+        }
         opcao = sairListar(x, y);
     }while(opcao == 0);
 }
@@ -153,7 +142,7 @@ void pesquisaMoradores(int x, int y){
         for(i=0;i < tMoradores; i++){
             if(strcmp(moradores[i].cpf, cpf) == 0 || strcmp(moradores[i].dono, dono) == 0){
                 LimparTela(x,y, 40, 10);
-                ImprimirMorador(x, y, moradores, 0, i );
+                ImprimirMorador(x, y, moradores[i]);
                 break;
             }
         }
