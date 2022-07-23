@@ -16,5 +16,5 @@ int sairCadastrar(int x, int y);
 int sairListar(int x, int y);
 
 int maisOpcoes(int x, int y);
-int maisOpcoesArea(int x, int y);
+int maisOpcoesArea(int x, int y,char op[][51], int t);
 #endif // UTIL_H_INCLUDE

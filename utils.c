@@ -108,17 +108,16 @@ int selecao(int x , int y, int larg, int alt, char opcoes[][101], int n, int opc
         if(opcao < 0) opcao = 0;
         if(opcao > n-1) opcao = n-1;
         if(opcao > primeiro + alt-1){
-                primeiro++;
-
-                    for(i = 0; i < alt; i++){
-        gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
-    }
+            primeiro++;
+            for(i = 0; i < alt; i++){
+              gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
+            }
         }
         else if(opcao < primeiro){
-                primeiro--;
-                for(i = 0; i < alt; i++){
-        gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
-    }
+          primeiro--;
+          for(i = 0; i < alt; i++){
+            gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
+          }
         }
     }while(1);
 }
@@ -171,7 +170,7 @@ int maisOpcoes(int x, int y){
 }
 
 
-int maisOpcoesArea(int x, int y){
+int maisOpcoesArea(int x, int y,char op[][51], int t){
   LimparTela(x, y, 40, 17);
   Caixa(x, y, 40, 17, 0,LIGHT_CYAN, BLACK);
   Caixa(x+3, y+1, 35, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
@@ -181,8 +180,8 @@ int maisOpcoesArea(int x, int y){
   int opcao;
   int xO[] = {x+4, x+4, x+4, x+4};
   int yO[] = {y+6, y+9, y+12, y+15};
-  char op[][51] = {"PESQUISAR MAIS", "EXCLUIR MORADOR", "ALTERAR MORADOR", "SAIR"};
-  opcao = Menu(xO, yO, op, 4, 0);
+
+  opcao = Menu(xO, yO, op, t, 0);
   areaApartamentosLivres(75, 6);
   return opcao;
 }

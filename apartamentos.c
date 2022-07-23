@@ -3,6 +3,8 @@
 int tApartamentos = 0;
 Apartamento apartamentos[100];
 
+
+
 Apartamento puxarAp(Apartamento apartamento){
   int i;
   for(i = 0; i < tApartamentos; i++){
@@ -141,6 +143,7 @@ void apartamentoEmMorador(int x, int y, Apartamento apartamento){
 }
 
 void areaApartamentosLivres(int x, int y){
+
   LimparTela(x, y, 40, 17);
   Caixa(x, y, 40, 17, 0,LIGHT_CYAN, BLACK);
   Caixa(x+3, y+1, 35, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
@@ -154,4 +157,13 @@ void areaApartamentosLivres(int x, int y){
     }
   }
   textcoloreback(WHITE, BLACK);
+}
+
+void esvaziarApartamento(Apartamento apartamento){
+  int i;
+  for(i =0; i < tApartamentos; i++){
+    if(!strcmp(apartamento.num, apartamentos[i].num)){
+      apartamentos[i].disp = 0;
+    }
+  }
 }

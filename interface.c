@@ -92,6 +92,8 @@ void areaMenu(){
     textcoloreback(WHITE, BLACK); 
     LimparTela(26, 6, 87, 17);
     areaApartamentosLivres(75, 6);
+
+
     opcao = Menu(x, y, op, 5, 0);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
     switch(opcao){

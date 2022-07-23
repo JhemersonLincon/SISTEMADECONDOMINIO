@@ -17,10 +17,12 @@ typedef struct{
 }Morador;
 
 
-Morador cadastrarMorador(int x, int y);
+Morador cadastrarMorador(int x, int y, int op);
 void ImprimirMorador(int x, int y, Morador morador);
 void areaMoradores(int x, int y);
 int getMoradores();
 void listarMoradores(int x, int y);
 void pesquisaMoradores(int x, int y);
-#endif 
+
+void excluirMorador(int op);
+#endif
