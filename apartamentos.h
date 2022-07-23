@@ -1,6 +1,5 @@
 #if !defined(APARTAMENTO_H_INCLUDE)
 #define APARTAMENTO_H_INCLUDE
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

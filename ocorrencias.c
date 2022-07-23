@@ -83,8 +83,8 @@ int selecaoOcorrencia(int x , int y, int larg, int alt, Ocorrencia ocorrencias[]
     tecla = getTecla();
     textcoloreback(WHITE, BLACK);
     gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, ocorrencias[opcao].relatosLm);
-    if(tecla == 's')opcao++;
-    if(tecla == 'w')opcao--;
+    if(tecla == 's' || tecla == 'S')opcao++;
+    if(tecla == 'w' || tecla == 'W')opcao--;
     if(tecla == 13) return opcao;
     if(opcao < 0) opcao = 0;
     if(opcao > total-1) opcao = total-1;

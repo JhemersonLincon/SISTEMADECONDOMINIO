@@ -161,3 +161,28 @@ int sairListar(int x, int y){
   int opcao = Menu(xO, yO, op, 2, 1);
   return opcao;
 }
+
+int maisOpcoes(int x, int y){
+  int xO[] = {x, x+20};
+  int yO[] = {y+12, y+12};
+  char op[][51] = {"MAIS OPCOES", "SAIR"};
+  int opcao = Menu(xO, yO, op, 2, 1);
+  return opcao;
+}
+
+
+int maisOpcoesArea(int x, int y){
+  LimparTela(x, y, 40, 17);
+  Caixa(x, y, 40, 17, 0,LIGHT_CYAN, BLACK);
+  Caixa(x+3, y+1, 35, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
+  textcoloreback(BLACK, LIGHT_CYAN);
+  gotoxy(x+4, y+2);printf("OPCOES");
+  textcoloreback(LIGHT_CYAN, BLACK);
+  int opcao;
+  int xO[] = {x+4, x+4, x+4, x+4};
+  int yO[] = {y+6, y+9, y+12, y+15};
+  char op[][51] = {"PESQUISAR MAIS", "EXCLUIR MORADOR", "ALTERAR MORADOR", "SAIR"};
+  opcao = Menu(xO, yO, op, 4, 0);
+  areaApartamentosLivres(75, 6);
+  return opcao;
+}

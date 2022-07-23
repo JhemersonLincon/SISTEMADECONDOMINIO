@@ -14,4 +14,7 @@ void cpfLimpo(char cpf[]);
 
 int sairCadastrar(int x, int y);
 int sairListar(int x, int y);
+
+int maisOpcoes(int x, int y);
+int maisOpcoesArea(int x, int y);
 #endif // UTIL_H_INCLUDE

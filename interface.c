@@ -89,7 +89,8 @@ void areaMenu(){
   int y[] = {7, 11, 15, 19,23};
   char op[][51] = {"MORADORES", "APARTAMENTOS", "PAGAMENTOS", "OCORRENCIA", "ADMINISTRADOR"};
   do{
-    LimparTela(28, 6, 87, 17);
+    textcoloreback(WHITE, BLACK); 
+    LimparTela(26, 6, 87, 17);
     areaApartamentosLivres(75, 6);
     opcao = Menu(x, y, op, 5, 0);
     //Caixa(x[opcao]+24, y[opcao]-2, 20, 3, 0,LIGHT_CYAN, BLACK);
@@ -108,7 +109,5 @@ void areaMenu(){
         break;
       default: break;
     }
-
   }while(opcao != -1);
-  
 }

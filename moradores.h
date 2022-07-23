@@ -8,14 +8,12 @@
 #include "apartamentos.h"
 
 typedef struct{
-    
     char dono[51];
     int idade;
     char cpf[51];
     int datapagamento;
     char tel[51];
     Apartamento apartamento;
-
 }Morador;
 
 
@@ -25,5 +23,4 @@ void areaMoradores(int x, int y);
 int getMoradores();
 void listarMoradores(int x, int y);
 void pesquisaMoradores(int x, int y);
-
 #endif 

@@ -1,8 +1,7 @@
 #include "apartamentos.h"
-
+#include "moradores.h"
 int tApartamentos = 0;
 Apartamento apartamentos[100];
-
 
 Apartamento puxarAp(Apartamento apartamento){
   int i;
@@ -18,10 +17,12 @@ Apartamento puxarAp(Apartamento apartamento){
 void programerAp(char num[], double tamanho, int comodos, int disp, double aluguel){
   strcpy(apartamentos[tApartamentos].num, num);
   apartamentos[tApartamentos].tamanho = tamanho;
+  apartamentos[tApartamentos].comodos = comodos;
   apartamentos[tApartamentos].disp = disp;
   apartamentos[tApartamentos].aluguel = aluguel;
   tApartamentos++;
 }
+
 void cadastrarAp(int x, int y){
 
   Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
@@ -86,7 +87,6 @@ void listarApartamento(int x, int y){
     LimparTela(x-1, y, 40, 5);
     if(op != -1) {
       ImprimirApartamento(x, y, apartamentos[op]);
-      apartamentoEmMorador(75, 6, apartamentos[op]);
     }
     opcao = sairListar(x, y);
   }while(opcao == 0);
@@ -110,8 +110,8 @@ int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamento
     tecla = getTecla();
     textcoloreback(WHITE, BLACK);
     gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].num);
-    if(tecla == 's')opcao++;
-    if(tecla == 'w')opcao--;
+    if(tecla == 's' || tecla == 'S')opcao++;
+    if(tecla == 'w' || tecla == 'W')opcao--;
     if(tecla == 13) return opcao;
     if(opcao < 0) opcao = 0;
     if(opcao > total-1) opcao = total-1;
