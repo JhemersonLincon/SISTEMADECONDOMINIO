@@ -5,8 +5,7 @@
 #include "utils.h"
 #include "interface.h"
 
-usuario adm[10];
-int tAdm = 2;
+
 // Define se o cursor vai aparecer ou não
 void tipoCursor(int cursor){
   HANDLE myconsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -33,50 +32,6 @@ int getTecla(){
         ch = getch() + 1000;
     }
     return ch;
-}
-//faz o sistema de login executar
-int login(int x, int y){
-  Caixa(x-2,y-7,70,14,0, LIGHT_CYAN, BLACK);
-  Caixa(x,y-5,65,0,0, LIGHT_CYAN, LIGHT_CYAN);
-
-  strcpy(adm[0].usuario,"house");
-  strcpy(adm[0].senha, "wendus");
-  // Isac
-  strcpy(adm[1].usuario,"isac");
-  strcpy(adm[1].senha, "123");
-  int i;
-  gotoxy(x, y);printf("Usuario de acesso: ");
-  gotoxy(x, y+3);printf("Digite senha de acesso: ");
-  while(1){
-    usuario user;
-    int cont = 0;
-    LimparTela(x+19,y, 10,0);
-    LimparTela(x+24,y+3, 10,0);
-    gotoxy(x+19, y); scanf(" %[^\n]", user.usuario);
-    gotoxy(x+24, y+3);
-    do{
-      user.senha[cont]  = getTecla();
-
-      if(user.senha[cont] == 8 && cont > 0){
-        printf("\b \b");
-        cont--;
-      }
-      else if(user.senha[cont] == 13){
-        user.senha[cont] = '\0';
-        break;
-      }
-      else if(user.senha[cont] != 8){
-        putchar('*');
-        cont++;
-      }
-    }while(user.senha[cont] != 27);
-    for(i = 0; i <  tAdm; i++){
-      if(!(strcmp(adm[i].usuario, user.usuario)) && !(strcmp(adm[i].senha, user.senha))){
-        LimparTela(x-2,y-7,70,14);
-        return 1;
-      }
-    }
-  }
 }
 
 void totalGetMoradores(){

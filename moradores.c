@@ -2,6 +2,15 @@
 #include "interface.h"
 int tMoradores = 0;
 Morador moradores[100];
+
+void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, char tele[], char numero[]){
+  strcpy(moradores[tMoradores].dono, dono);
+  moradores[tMoradores].idade = idade;
+  strcpy(moradores[tMoradores].cpf, cpf);
+  strcpy(moradores[tMoradores].tel, tele);
+  strcpy(moradores[tMoradores].apartamento.num, numero);
+  tMoradores++;
+}
 // Puxar quantidade de moradores
 int getTotalMoradores(){
     return tMoradores;
@@ -29,11 +38,8 @@ Morador cadastrarMorador(int x, int y){
         gotoxy(x, y+6);printf("Data de pagamento: ");            scanf(" %d", &morador.datapagamento);
         gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %s", morador.tel);
         gotoxy(x, y+10);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
-      
         morador.apartamento = puxarAp(morador.apartamento);
-        moradores[tMoradores] = morador;
-        tMoradores++;
-    
+        adicionarMorador(morador.dono, morador.idade, morador.cpf, morador.datapagamento, morador.tel, morador.apartamento.num);
         totalGetMoradores();
         opcao = sairCadastrar(x, y);
         LimparTela(x-1,y-1, 40, 13);
@@ -164,6 +170,9 @@ void pesquisaMoradores(int x, int y){
 
 void excluirMorador(int op){
     int i, j;
+    if(login(30, 13, 45, 17)){
+        
+    }
     Morador aux;
     strcpy(moradores[op].dono, " ");
     strcpy(moradores[op].tel, " ");
