@@ -1,7 +1,6 @@
 #include "interface.h"
 #include "ocorrencias.h"
 
-
 Ocorrencia ocorrencias[100];
 int tOcorrencia = 0;
 

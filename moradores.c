@@ -2,7 +2,7 @@
 #include "interface.h"
 int tMoradores = 0;
 Morador moradores[100];
-
+FILE *fpMorador;
 void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, char tele[], char numero[]){
   strcpy(moradores[tMoradores].dono, dono);
   moradores[tMoradores].idade = idade;
@@ -19,7 +19,6 @@ int getTotalMoradores(){
 Morador cadastrarMorador(int x, int y){
     Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
-    gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
     int opcao;
     do{
         textcoloreback(WHITE, BLACK);

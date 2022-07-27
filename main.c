@@ -10,7 +10,6 @@ int main()
   adicionarAdm("Heveras", "jow");
   adicionarAdm("Isac", "123");
   adicionarAdm("lincon", "123");
-
   areaInterface();
   totalGetMoradores();
   programerAp("A1", 30.00, 5, 0, 450.00);

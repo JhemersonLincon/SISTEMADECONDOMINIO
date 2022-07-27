@@ -5,11 +5,14 @@
 
 typedef struct{
   char pagador[51];
-  float valorPagamento;
+  double valorPagamento;
   int diaPagamento;
   Morador dadosPagador;
 }Pagamento;
 
 void areaPagamento(int x, int y);
 void cadastrarPagamento(int x, int y);
+void ImprimirPagamento(int x, int y, Pagamento pagamento);
+void listarPagamento(int x, int y);
+int selecaoPagamento(int x , int y, int larg, int alt,Pagamento pagamentos[], int total, int opcao);
 #endif
