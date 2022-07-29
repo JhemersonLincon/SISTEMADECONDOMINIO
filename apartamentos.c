@@ -2,7 +2,7 @@
 #include "moradores.h"
 int tApartamentos = 0;
 Apartamento apartamentos[100];
-
+FILE *fpApartamento;
 
 
 Apartamento puxarAp(Apartamento apartamento){
@@ -16,14 +16,30 @@ Apartamento puxarAp(Apartamento apartamento){
   return apartamento;
 }
 
-void programerAp(char num[], double tamanho, int comodos, int disp, double aluguel){
+void adicionarApArquivos(Apartamento apartamento){
+  
+  fpApartamento = fopen("Apartamento.txt", "rb+");
+  
+  if(fpApartamento == NULL){
+    fpApartamento = fopen("Apartamento.txt", "wb+");
+    if(fpApartamento == NULL){
+    printf("Falha em abrir o arquivo.\n");
+  }
+  }
+  
+  fwrite(&apartamento, sizeof(Apartamento), 1, fpApartamento);
+  
+  fclose(fpApartamento);
+}
+
+/*void adicionarAp(char num[], double tamanho, int comodos, int disp, double aluguel){
   strcpy(apartamentos[tApartamentos].num, num);
   apartamentos[tApartamentos].tamanho = tamanho;
   apartamentos[tApartamentos].comodos = comodos;
   apartamentos[tApartamentos].disp = disp;
   apartamentos[tApartamentos].aluguel = aluguel;
   tApartamentos++;
-}
+}*/
 
 void cadastrarAp(int x, int y){
 
@@ -46,7 +62,7 @@ void cadastrarAp(int x, int y){
     gotoxy(x, y+4); printf("Quant de comodos: ");        scanf("%d", &apartamento.comodos);
     gotoxy(x, y+6); printf("Disponibilidade(0/1): ");         scanf("%d", &apartamento.disp);
     gotoxy(x, y+8); printf("Preco do Aluguel: ");        scanf("%lf", &apartamento.aluguel);
-    apartamentos[tApartamentos] = apartamento;
+    adicionarApArquivos(apartamento);
     tApartamentos++;
     totalGetMoradores();
     opcao = sairCadastrar(x, y);

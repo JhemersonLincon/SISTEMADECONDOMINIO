@@ -16,7 +16,7 @@ typedef struct{
     Apartamento apartamento;
 }Morador;
 
-void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, char tele[], char numero[]);
+void adicionarMoradorArquivo(Morador morador);
 Morador cadastrarMorador(int x, int y);
 void ImprimirMorador(int x, int y, Morador morador);
 void areaMoradores(int x, int y);

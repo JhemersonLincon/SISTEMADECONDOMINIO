@@ -14,7 +14,7 @@ typedef struct{
   double aluguel;
 }Apartamento;
 Apartamento puxarAp(Apartamento apartamento);
-void programerAp(char num[], double tamanho, int comodos, int disp, double aluguel);
+void adicionarApArquivos(Apartamento apartamento);
 void cadastrarAp(int x, int y);
 void ImprimirApartamento(int x, int y, Apartamento apartamentos);
 void areaApartamento(int x, int y);

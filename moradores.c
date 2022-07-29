@@ -3,7 +3,16 @@
 int tMoradores = 0;
 Morador moradores[100];
 FILE *fpMorador;
-void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, char tele[], char numero[]){
+void adicionarMoradorArquivo(Morador morador){
+  fpMorador = fopen("Morador.txt", "rb+");
+  if(fpMorador == NULL){
+    printf("Falha em abrir o arquivo.\n");
+  }
+  fwrite(&morador, sizeof(Morador), 1, fpMorador);
+
+  fclose(fpMorador);
+}
+ /*void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, char tele[], char numero[]){
   strcpy(moradores[tMoradores].dono, dono);
   moradores[tMoradores].idade = idade;
   strcpy(moradores[tMoradores].cpf, cpf);
@@ -11,6 +20,7 @@ void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, c
   strcpy(moradores[tMoradores].apartamento.num, numero);
   tMoradores++;
 }
+*/
 // Puxar quantidade de moradores
 int getTotalMoradores(){
     return tMoradores;
@@ -38,7 +48,7 @@ Morador cadastrarMorador(int x, int y){
         gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %s", morador.tel);
         gotoxy(x, y+10);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
         morador.apartamento = puxarAp(morador.apartamento);
-        adicionarMorador(morador.dono, morador.idade, morador.cpf, morador.datapagamento, morador.tel, morador.apartamento.num);
+        adicionarMoradorArquivo(morador);
         totalGetMoradores();
         opcao = sairCadastrar(x, y);
         LimparTela(x-1,y-1, 40, 13);
