@@ -8,8 +8,8 @@ typedef struct {
 void Data(int x, int y);
 int getTecla();
 int selecao(int x, int y, int larg, int alt, char opcoes[][101], int n, int opcao);
-void totalGetMoradores();
-void cpfLimpo(char cpf[]);
+
+void converterMaiusculo(char vetor[]);
 
 int sairCadastrar(int x, int y);
 int sairListar(int x, int y);

@@ -2,26 +2,33 @@
 #include "interface.h"
 int tMoradores = 0;
 Morador moradores[100];
-FILE *fpMorador;
 
+FILE *fpMorador;
 void abrirMoradorArquivo(){
     fpMorador = fopen("Morador.txt", "rb+");
     if(fpMorador == NULL){
         fpMorador = fopen("Morador.txt", "wb+");
-        if(fpMorador == NULL)printf("Falha em abrir o arquivo.\n");
+        if(fpMorador == NULL){
+            printf("Falha em abrir o arquivo.\n");
+            exit(1);
+        }
     }
 }
 void fecharMoradorArquivo(){
     fclose(fpMorador);
 }
+
 void adicionarMorador(Morador morador){
     moradores[tMoradores] = morador;
+
     abrirMoradorArquivo();
     fseek(fpMorador, 0, SEEK_END);
     fwrite(&morador, sizeof(Morador), 1, fpMorador);
     fecharMoradorArquivo();
+
     tMoradores++;
 }
+
 // Puxar quantidade de moradores
 
 // cadastrar morador - imcompleto
@@ -47,6 +54,8 @@ Morador cadastrarMorador(int x, int y){
         gotoxy(x, y+6);printf("Data de pagamento: ");            scanf(" %d", &morador.datapagamento);
         gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %s", morador.tel);
         gotoxy(x, y+10);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
+        converterMaiusculo(morador.apartamento.num);
+        alterarDisp(morador.apartamento.num);
         morador.apartamento = puxarAp(morador.apartamento);
         adicionarMorador(morador);
         totalGetMoradores();

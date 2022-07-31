@@ -9,7 +9,11 @@ void abrirAdmArquivo(){
   fpAdm = fopen("adm.txt", "rb+");
   if(fpAdm == NULL){
       fpAdm = fopen("adm.txt", "wb+");
-      if(fpAdm == NULL)printf("Falha em abrir o arquivo.\n");
+      if(fpAdm == NULL){
+        printf("Falha em abrir o arquivo.\n");
+        exit(1);
+      }
+
   }
 }
 void fecharAdmArquivo(){

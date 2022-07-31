@@ -33,12 +33,24 @@ Apartamento puxarAp(Apartamento apartamento){
   return apartamento;
 }
 
+void alterarDisp(char Numero[]){
+    Apartamento alterado;
+    abrirApArquivo();
+    while(fread(&alterado, sizeof(Apartamento), 1, fpApartamento)){
+      if(!strcmp(alterado.num, Numero))break;
+    }
+    alterado.disp = 1;
+    fseek(fpApartamento, -sizeof(Apartamento), SEEK_CUR);
+   fwrite(&alterado, sizeof(Apartamento), 1, fpApartamento);
+   fecharApArquivo();
+}
 void abrirApArquivo(){
   fpApartamento = fopen("Apartamento.txt", "rb+");
   if(fpApartamento == NULL){
     fpApartamento = fopen("Apartamento.txt", "wb+");
     if(fpApartamento == NULL){
       printf("Falha em abrir o arquivo.\n");
+      exit(1);
     }
   }
 }
@@ -75,6 +87,7 @@ void cadastrarAp(int x, int y){
     gotoxy(x, y+4); printf("Quant de comodos: ");        scanf("%d", &apartamento.comodos);
     gotoxy(x, y+6); printf("Disponibilidade(0/1): ");         scanf("%d", &apartamento.disp);
     gotoxy(x, y+8); printf("Preco do Aluguel: ");        scanf("%lf", &apartamento.aluguel);
+    converterMaiusculo(apartamento.num);
     adicionarAp(apartamento);
     opcao = sairCadastrar(x, y);
     LimparTela(x-1,y-1, 40, 13);
@@ -167,11 +180,13 @@ void areaApartamentosLivres(int x, int y){
   textcoloreback(BLACK, LIGHT_CYAN);
   gotoxy(x+9, y+2);printf("APARTAMENTOS DISPONIVEIS");
   textcoloreback(LIGHT_CYAN, BLACK);
-  int i;
+  int i, cont = 0;
   for(i = 0; i < tApartamentos; i++){
     if(!apartamentos[i].disp){
-      gotoxy(x+3, y+i+5);printf("o- %s %*s", apartamentos[i].num, +13,"Disponivel");
+      gotoxy(x+3, y+cont+5);printf("o- %s %*s", apartamentos[i].num, +13,"Disponivel");
+      cont++;
     }
+    else cont <= 0? 0: cont--;
   }
   textcoloreback(WHITE, BLACK);
 }

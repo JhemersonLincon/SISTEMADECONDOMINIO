@@ -37,6 +37,7 @@ void abrirPagamentoArquivo(){
     fpPagamento = fopen("Pagamentos.txt", "wb+");
     if(fpPagamento == NULL){
       printf("Falha em abrir o arquivo.\n");
+      exit(1);
     }
   }
 }
@@ -50,7 +51,6 @@ void adicionarPagamento(Pagamento pagamento){
   abrirPagamentoArquivo();
   fseek(fpPagamento, 0, SEEK_END);
   fwrite(&pagamento, sizeof(Pagamento), 1, fpPagamento);
-  tPagamentos++;
 }
 
 void cadastrarPagamento(int x, int y){

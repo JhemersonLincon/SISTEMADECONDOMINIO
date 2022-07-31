@@ -66,6 +66,12 @@ int maisOpcoes(int x, int y){
   return opcao;
 }
 
+void converterMaiusculo(char vetor[]){
+  int i;
+  for(i = 0; i < strlen(vetor); i++){
+    if(isalpha(vetor[i]) == 2) vetor[i] =  toupper(vetor[i]);
+  }
+}
 
 int maisOpcoesArea(int x, int y,char op[][51], int t){
   LimparTela(x, y, 40, 17);

@@ -3,7 +3,7 @@
 
 Ocorrencia ocorrencias[100];
 int tOcorrencia = 0;
-
+FILE *fpOcorrencia;
 
 void areaOcorrencia(int x, int y){
   int xO[] = {x+24, x+24, x+24};
@@ -20,6 +20,36 @@ void areaOcorrencia(int x, int y){
           listarOcorrencia(30, 10);
       default: break;
   }
+}
+
+
+void abrirOcorrenciaArquivo(){
+  fpOcorrencia = fopen("Ocorrencias.txt", "rb+");
+  if(fpOcorrencia == NULL){
+    fpOcorrencia = fopen("Ocorrencias.txt", "wb+");
+    if(fpOcorrencia == NULL){
+      printf("Falha em abrir o arquivo.\n");
+    }
+  }
+}
+void fecharOcorrenciaArquivo(){
+  fclose(fpOcorrencia);
+}
+void adicionarOcorrencia(Ocorrencia ocorrencia){
+  ocorrencias[tOcorrencia] = ocorrencia;
+  abrirPagamentoArquivo();
+  fseek(fpOcorrencia, 0, SEEK_END);
+  fwrite(&ocorrencia, sizeof(Ocorrencia), 1, fpOcorrencia);
+  fecharOcorrenciaArquivo();
+  tOcorrencia++;
+}
+void guardarOcorrenciaVetor(){
+    abrirOcorrenciaArquivo();
+    fseek(fpOcorrencia, 0, SEEK_SET);
+    while(fread(&ocorrencias[tOcorrencia], sizeof(Ocorrencia), 1, fpOcorrencia)){
+      tOcorrencia++;
+    }
+    fecharOcorrenciaArquivo();
 }
 
 void cadastrarOcorrencia(int x, int y){
@@ -42,8 +72,6 @@ void cadastrarOcorrencia(int x, int y){
       else if(i <= 33) ocorrencia.relatosLm[i] = '.';
     }
     ocorrencia.relatosLm[i] = '\0';
-    ocorrencias[tOcorrencia] = ocorrencia;
-    tOcorrencia++;
     opcao = sairCadastrar(x, y);
   }while(opcao == 0);
 }
