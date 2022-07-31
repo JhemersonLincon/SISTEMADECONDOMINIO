@@ -4,6 +4,23 @@ int tApartamentos = 0;
 Apartamento apartamentos[100];
 FILE *fpApartamento;
 
+void areaApartamento(int x, int y){
+  int xO[] = {x+24, x+24, x+24};
+  int yO[] = {y-1, y+2, y+5};
+  char opO[][51] = {"CADASTRAR APARTAMENTO", "LISTAR APARTAMENTO", };
+  int opcao = Menu(xO, yO, opO, 2, 0);
+  LimparTela(x+23, y-3, 20, 10); 
+  if(opcao != -1)Caixa(28, 6, 45, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
+  switch(opcao){
+    case 0:
+      cadastrarAp(30,10);
+      break;
+    case 1:
+      listarApartamento(30, 10);
+      break;
+    default: break;
+    }
+}
 
 Apartamento puxarAp(Apartamento apartamento){
   int i;
@@ -16,31 +33,27 @@ Apartamento puxarAp(Apartamento apartamento){
   return apartamento;
 }
 
-void adicionarApArquivos(Apartamento apartamento){
-  
+void abrirApArquivo(){
   fpApartamento = fopen("Apartamento.txt", "rb+");
-  
   if(fpApartamento == NULL){
     fpApartamento = fopen("Apartamento.txt", "wb+");
     if(fpApartamento == NULL){
-    printf("Falha em abrir o arquivo.\n");
+      printf("Falha em abrir o arquivo.\n");
+    }
   }
-  }
-  
-  fwrite(&apartamento, sizeof(Apartamento), 1, fpApartamento);
-  
+}
+void fecharApArquivo(){
   fclose(fpApartamento);
 }
 
-/*void adicionarAp(char num[], double tamanho, int comodos, int disp, double aluguel){
-  strcpy(apartamentos[tApartamentos].num, num);
-  apartamentos[tApartamentos].tamanho = tamanho;
-  apartamentos[tApartamentos].comodos = comodos;
-  apartamentos[tApartamentos].disp = disp;
-  apartamentos[tApartamentos].aluguel = aluguel;
+void adicionarAp(Apartamento ap){
+  apartamentos[tApartamentos] = ap;
+  abrirApArquivo();
+  fseek(fpApartamento, 0, SEEK_END);
+  fwrite(&ap, sizeof(Apartamento), 1, fpApartamento);
+  fecharApArquivo();
   tApartamentos++;
-}*/
-
+}
 void cadastrarAp(int x, int y){
 
   Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
@@ -62,14 +75,11 @@ void cadastrarAp(int x, int y){
     gotoxy(x, y+4); printf("Quant de comodos: ");        scanf("%d", &apartamento.comodos);
     gotoxy(x, y+6); printf("Disponibilidade(0/1): ");         scanf("%d", &apartamento.disp);
     gotoxy(x, y+8); printf("Preco do Aluguel: ");        scanf("%lf", &apartamento.aluguel);
-    adicionarApArquivos(apartamento);
-    tApartamentos++;
-    totalGetMoradores();
+    adicionarAp(apartamento);
     opcao = sairCadastrar(x, y);
     LimparTela(x-1,y-1, 40, 13);
   }while(opcao == 0);
 }
-
 void ImprimirApartamento(int x, int y, Apartamento apartamentos){
   gotoxy(x, y);  printf("Numero: ");                        printf("%s", apartamentos.num);
   gotoxy(x, y+2);printf("Tamanho: ");                       printf("%.2lf", apartamentos.tamanho);
@@ -78,22 +88,14 @@ void ImprimirApartamento(int x, int y, Apartamento apartamentos){
   gotoxy(x, y+8);printf("Preco do Aluguel: ");              printf("R$ %.2lf", apartamentos.aluguel);
 }
 
-void areaApartamento(int x, int y){
-  int xO[] = {x+24, x+24, x+24};
-  int yO[] = {y-1, y+2, y+5};
-  char opO[][51] = {"CADASTRAR APARTAMENTO", "LISTAR APARTAMENTO", };
-  int opcao = Menu(xO, yO, opO, 2, 0);
-  LimparTela(x+23, y-3, 20, 10); 
-  if(opcao != -1)Caixa(28, 6, 45, 17, 0,LIGHT_CYAN, BLACK);// primeira caixa da area principal
-  switch(opcao){
-    case 0:
-      cadastrarAp(30,10);
-      break;
-    case 1:
-      listarApartamento(30, 10);
-      break;
-    default: break;
+
+void guardarApVetor(){
+    abrirApArquivo();
+    fseek(fpApartamento, 0, SEEK_SET);
+    while(fread(&apartamentos[tApartamentos], sizeof(Apartamento), 1, fpApartamento)){
+      tApartamentos++;
     }
+    fecharApArquivo();
 }
 
 void listarApartamento(int x, int y){
@@ -159,7 +161,6 @@ void apartamentoEmMorador(int x, int y, Apartamento apartamento){
 }
 
 void areaApartamentosLivres(int x, int y){
-
   LimparTela(x, y, 40, 17);
   Caixa(x, y, 40, 17, 0,LIGHT_CYAN, BLACK);
   Caixa(x+3, y+1, 35, 1, 0,LIGHT_CYAN, LIGHT_CYAN);

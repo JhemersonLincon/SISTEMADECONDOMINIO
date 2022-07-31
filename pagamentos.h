@@ -10,6 +10,10 @@ typedef struct{
   Morador dadosPagador;
 }Pagamento;
 
+void guardarPagamentoVetor();
+void abrirPagamentoArquivo();
+void fecharPagamentoArquivo();
+
 void areaPagamento(int x, int y);
 void cadastrarPagamento(int x, int y);
 void ImprimirPagamento(int x, int y, Pagamento pagamento);

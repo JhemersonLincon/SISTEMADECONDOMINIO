@@ -3,28 +3,27 @@
 int tMoradores = 0;
 Morador moradores[100];
 FILE *fpMorador;
-void adicionarMoradorArquivo(Morador morador){
-  fpMorador = fopen("Morador.txt", "rb+");
-  if(fpMorador == NULL){
-    printf("Falha em abrir o arquivo.\n");
-  }
-  fwrite(&morador, sizeof(Morador), 1, fpMorador);
 
-  fclose(fpMorador);
+void abrirMoradorArquivo(){
+    fpMorador = fopen("Morador.txt", "rb+");
+    if(fpMorador == NULL){
+        fpMorador = fopen("Morador.txt", "wb+");
+        if(fpMorador == NULL)printf("Falha em abrir o arquivo.\n");
+    }
 }
- /*void adicionarMorador(char dono[51], int idade, char cpf[], int datapagamento, char tele[], char numero[]){
-  strcpy(moradores[tMoradores].dono, dono);
-  moradores[tMoradores].idade = idade;
-  strcpy(moradores[tMoradores].cpf, cpf);
-  strcpy(moradores[tMoradores].tel, tele);
-  strcpy(moradores[tMoradores].apartamento.num, numero);
-  tMoradores++;
+void fecharMoradorArquivo(){
+    fclose(fpMorador);
 }
-*/
+void adicionarMorador(Morador morador){
+    moradores[tMoradores] = morador;
+    abrirMoradorArquivo();
+    fseek(fpMorador, 0, SEEK_END);
+    fwrite(&morador, sizeof(Morador), 1, fpMorador);
+    fecharMoradorArquivo();
+    tMoradores++;
+}
 // Puxar quantidade de moradores
-int getTotalMoradores(){
-    return tMoradores;
-}
+
 // cadastrar morador - imcompleto
 Morador cadastrarMorador(int x, int y){
     Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
@@ -48,7 +47,7 @@ Morador cadastrarMorador(int x, int y){
         gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %s", morador.tel);
         gotoxy(x, y+10);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
         morador.apartamento = puxarAp(morador.apartamento);
-        adicionarMoradorArquivo(morador);
+        adicionarMorador(morador);
         totalGetMoradores();
         opcao = sairCadastrar(x, y);
         LimparTela(x-1,y-1, 40, 13);
@@ -90,12 +89,11 @@ void listarMoradores(int x, int y){
     do{
         if(tMoradores) op = selecaoMoradores(x-2, y-4, 45, 17, moradores, tMoradores, 0);
         LimparTela(x-1,y, 43, 11);
-
         if(op != -1 && tMoradores > 0) {
             ImprimirMorador(x, y, moradores[op]);  
             opcao = maisOpcoes(x, y);
             if(opcao == 0){
-                char op[][51] = {"APARTAMENTO ALUGADO", "EXCLUIR MORADOR", "SAIR"};
+                char op[][51] = {"APARTAMENTO", "EXCLUIR MORADOR", "SAIR"};
                 opcao = maisOpcoesArea(75, 6, op, 3);
             }
             else break;
@@ -106,7 +104,18 @@ void listarMoradores(int x, int y){
     }while(opcao == 0);
 }
 // Selecionar o morador na lista de moradores
+
+void guardarMoradorVetor(){
+    abrirMoradorArquivo();
+    fseek(fpMorador, 0, SEEK_SET);
+    while(fread(&moradores[tMoradores], sizeof(Morador), 1, fpMorador)){
+        tMoradores++;
+    }
+    fecharMoradorArquivo();
+}
+
 int selecaoMoradores(int x , int y, int larg, int alt,Morador moradores[], int total, int opcao){
+
     Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
     Caixa(30,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
@@ -200,4 +209,8 @@ void excluirMorador(int op){
     tMoradores--;
     totalGetMoradores();
     strcpy(moradores[op].cpf, " ");
+}
+
+int getTotalMoradores(){
+    return tMoradores;
 }

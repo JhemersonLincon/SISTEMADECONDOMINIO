@@ -42,64 +42,6 @@ void totalGetMoradores(){
   textcoloreback(LIGHT_CYAN, BLACK);
 }
 
-int selecao(int x , int y, int larg, int alt, char opcoes[][101], int n, int opcao){
-    Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
-    char tecla, i;
-    int primeiro = 0;
-    textcoloreback(0, 7);
-    for(i = 0; i < alt; i++){
-        gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
-    }
-    do{
-        textcoloreback(2, 0);
-        gotoxy(x+1, y+1+opcao - primeiro);printf("%*s",-larg, opcoes[opcao]);
-        tecla = getTecla();
-        textcoloreback(0, 7);
-        gotoxy(x+1, y+1+opcao - primeiro);printf("%*s",-larg, opcoes[opcao]);
-
-        if(tecla == 's')opcao++;
-        if(tecla == 'w')opcao--;
-        if(tecla == 13)return opcao;
-        if(opcao < 0) opcao = 0;
-        if(opcao > n-1) opcao = n-1;
-        if(opcao > primeiro + alt-1){
-            primeiro++;
-            for(i = 0; i < alt; i++){
-              gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
-            }
-        }
-        else if(opcao < primeiro){
-          primeiro--;
-          for(i = 0; i < alt; i++){
-            gotoxy(x+1, y+1+i);printf("%*s",-larg, opcoes[primeiro+i]);
-          }
-        }
-    }while(1);
-}
-void cpfLimpo(char cpf[]){
-
-  int i;
-  for(i=0;i < 15 ; i++){
-    if(i == 3 || i == 7)cpf[i] = '.';
-    else if(i == 11)cpf[i] = '-';
-    else if(i == 15)cpf[i] = '\0';
-    else cpf[i] = getch();
-
-    if(cpf[i] == 8){
-      printf("\b \b");
-      i--;
-    }
-
-    else if(cpf[i] == 13 && i > 0){
-      cpf[i] = '\0';
-      break;
-    }
-
-    else printf("%c", cpf[i]);
-  }
-}
-
-
 int sairCadastrar(int x, int y){
   int xO[] = {x, x+20};
   int yO[] = {y+12, y+12};

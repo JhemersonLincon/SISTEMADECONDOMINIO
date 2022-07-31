@@ -14,12 +14,20 @@ typedef struct{
   double aluguel;
 }Apartamento;
 Apartamento puxarAp(Apartamento apartamento);
-void adicionarApArquivos(Apartamento apartamento);
+void adicionarAp(Apartamento apartamento);
+
+void abrirApArquivo();
+void fecharApArquivo();
+void guardarApVetor();
+
 void cadastrarAp(int x, int y);
 void ImprimirApartamento(int x, int y, Apartamento apartamentos);
+
 void areaApartamento(int x, int y);
+
 void listarApartamento(int x, int y);
 int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao);
+
 void apartamentoEmMorador(int x, int y, Apartamento apartamento);
 void areaApartamentosLivres(int x, int y);
 void esvaziarApartamento(Apartamento apartamento);

@@ -3,15 +3,30 @@
 
 int tAdms = 0;
 
-Login adms[5];
+Login adms[100];
+FILE *fpAdm;
 
-int adicionarAdm(char nome[51], char login[51]){
+void abrirAdmArquivo(){
+  fpAdm = fopen("adm.txt", "rb+");
+  if(fpAdm == NULL){
+      fpAdm = fopen("adm.txt", "wb+");
+      if(fpAdm == NULL)printf("Falha em abrir o arquivo.\n");
+  }
+}
+void fecharAdmArquivo(){
+  fclose(fpAdm);
+}
+
+int adicionarAdm(Login adm){
   int i;
   for(i = 0;i < tAdms; i++){
-    if(!strcmp(adms[tAdms].nome, nome))return 0;
+    if(!strcmp(adms[tAdms].nome, adm.nome))return 0;
   }
-  strcpy(adms[tAdms].nome, nome);
-  strcpy(adms[tAdms].login, login);
+  adms[tAdms] = adm;
+  abrirAdmArquivo();
+  fseek(fpAdm, 0, SEEK_END);
+  fwrite(&adm, sizeof(Login), 1, fpAdm);
+  fecharAdmArquivo();
   tAdms++;
   return 1;
 }
@@ -29,7 +44,7 @@ void CadastrarAdm(int x, int y){
       tipoCursor(1);
       gotoxy(x, y);  printf("Administrador: "); scanf(" %[^\n]", login.nome);
       gotoxy(x, y+2);printf("Login: "); scanf(" %[^\n]", login.login);
-      int confirmacao = adicionarAdm(login.nome, login.login);
+      int confirmacao = adicionarAdm(login);
       tipoCursor(0);
       gotoxy(x, y+12);confirmacao?printf("Administrador Cadastrado..."):printf("Administrador ja existe...");
       Sleep(500);
@@ -71,6 +86,17 @@ void areaAdm(int x, int y){
       default: break;
     }
 
+}
+
+void guardarAdmVetor(){
+
+    abrirAdmArquivo();
+    fseek(fpAdm, 0, SEEK_SET);
+
+    while(fread(&adms[tAdms], sizeof(Login), 1, fpAdm)){
+      tAdms++;
+    }
+    fecharAdmArquivo();
 }
 
 void listarAdms(int x, int y){
@@ -180,6 +206,7 @@ int login(int x, int y, int largura, int altura){
         LimparTela(x-2,y-7,largura,altura);
         return 1;
       }
+      ImprimirAdm(80, 0, adms[i]);
     }
   }
 }

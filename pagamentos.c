@@ -3,8 +3,10 @@
 int tPagamentos = 0;
 Pagamento pagamentos[1000];
 
+FILE *fpPagamento;
 
 void areaPagamento(int x, int y){
+  
   int xO[] = {x+24, x+24, x+24};
   int yO[] = {y-1, y+2, y+5};
   char opO[][51] = {"CADASTRAR PAGAMENTO", "LISTAR PAGAMENTOS"};
@@ -29,6 +31,28 @@ void ImprimirPagamento(int x, int y, Pagamento pagamento){
   gotoxy(x, y+4);printf("Dia do pagamento: ");               printf("%d", pagamento.diaPagamento);                     
 }
 
+void abrirPagamentoArquivo(){
+  fpPagamento = fopen("Pagamentos.txt", "rb+");
+  if(fpPagamento == NULL){
+    fpPagamento = fopen("Pagamentos.txt", "wb+");
+    if(fpPagamento == NULL){
+      printf("Falha em abrir o arquivo.\n");
+    }
+  }
+}
+
+void fecharPagamentoArquivo(){
+  fclose(fpPagamento);
+}
+
+void adicionarPagamento(Pagamento pagamento){
+  pagamentos[tPagamentos] = pagamento;
+  abrirPagamentoArquivo();
+  fseek(fpPagamento, 0, SEEK_END);
+  fwrite(&pagamento, sizeof(Pagamento), 1, fpPagamento);
+  tPagamentos++;
+}
+
 void cadastrarPagamento(int x, int y){
   Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
   Pagamento pagamento;
@@ -46,11 +70,19 @@ void cadastrarPagamento(int x, int y){
     gotoxy(x, y);   printf("Pagador: ");                    scanf(" %[^\n]", pagamento.pagador);
     gotoxy(x, y+2); printf("Valor do Pagamento: ");         scanf("%lf", &pagamento.valorPagamento);
     gotoxy(x, y+4); printf("Dia do Pagamento: ");           scanf(" %d", &pagamento.diaPagamento);
-    pagamentos[tPagamentos] = pagamento;
-    tPagamentos++;
+    adicionarPagamento(pagamento);
     opcao = sairCadastrar(x, y);
   }while(opcao == 0);
 }
+void guardarPagamentoVetor(){
+    abrirPagamentoArquivo();
+    fseek(fpPagamento, 0, SEEK_SET);
+    while(fread(&pagamentos[tPagamentos], sizeof(Pagamento), 1, fpPagamento)){
+      tPagamentos++;
+    }
+    fecharPagamentoArquivo();
+}
+
 
 void listarPagamento(int x, int y){
   int op = -1;
