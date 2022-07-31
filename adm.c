@@ -1,6 +1,5 @@
 #include "adm.h"
 
-
 int tAdms = 0;
 
 Login adms[100];
@@ -159,6 +158,7 @@ int selecaoAdms(int x , int y, int larg, int alt,Login adms[], int total, int op
         }
     }while(1);
 }
+
 //faz o sistema de login executar
 int login(int x, int y, int largura, int altura){
   Caixa(x-2,y-7,largura,altura,0, LIGHT_CYAN, BLACK);
@@ -206,7 +206,6 @@ int login(int x, int y, int largura, int altura){
         LimparTela(x-2,y-7,largura,altura);
         return 1;
       }
-      ImprimirAdm(80, 0, adms[i]);
     }
   }
 }

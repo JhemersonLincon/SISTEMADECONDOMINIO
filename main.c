@@ -9,9 +9,7 @@ int main()
   guardarAdmVetor();
   guardarApVetor();
   guardarPagamentoVetor();
-  
   areaInterface();
-
   areaMenu();
   system("cls");
   return 0;

@@ -28,6 +28,7 @@ void adicionarMorador(Morador morador){
 Morador cadastrarMorador(int x, int y){
     Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
+    gotoxy(x+10,y-3);printf("CADASTRO DE MORADOR");
     int opcao;
     do{
         textcoloreback(WHITE, BLACK);
