@@ -33,13 +33,13 @@ Apartamento puxarAp(Apartamento apartamento){
   return apartamento;
 }
 
-void alterarDisp(char Numero[]){
+void alterarDisp(char Numero[], int disp){
     Apartamento alterado;
     abrirApArquivo();
     while(fread(&alterado, sizeof(Apartamento), 1, fpApartamento)){
       if(!strcmp(alterado.num, Numero))break;
     }
-    alterado.disp = 1;
+    alterado.disp = disp;
     fseek(fpApartamento, -sizeof(Apartamento), SEEK_CUR);
    fwrite(&alterado, sizeof(Apartamento), 1, fpApartamento);
    fecharApArquivo();
@@ -196,6 +196,11 @@ void esvaziarApartamento(Apartamento apartamento){
   for(i =0; i < tApartamentos; i++){
     if(!strcmp(apartamento.num, apartamentos[i].num)){
       apartamentos[i].disp = 0;
+      alterarDisp(apartamento.num, 0);
     }
   }
+}
+
+int getTotalApartamentos(){
+    return tApartamentos;
 }

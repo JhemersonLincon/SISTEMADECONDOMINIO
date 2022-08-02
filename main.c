@@ -10,7 +10,6 @@ int main()
   guardarApVetor();
   guardarPagamentoVetor();
 
-
   
   areaInterface();
   areaMenu();

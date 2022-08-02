@@ -51,6 +51,7 @@ void adicionarPagamento(Pagamento pagamento){
   abrirPagamentoArquivo();
   fseek(fpPagamento, 0, SEEK_END);
   fwrite(&pagamento, sizeof(Pagamento), 1, fpPagamento);
+  tPagamentos++;
 }
 
 void cadastrarPagamento(int x, int y){
@@ -88,7 +89,7 @@ void listarPagamento(int x, int y){
   int op = -1;
   int opcao;
   do{
-    if(tPagamentos) op = selecaoMoradores(x-2, y-4, 45, 17, pagamentos, tPagamentos, 0);
+    if(tPagamentos) op = selecaoPagamento(x-2, y-4, 45, 17, pagamentos, tPagamentos, 0);
     LimparTela(x-1,y, 43, 11);
 
     if(op != -1 && tPagamentos > 0) {
