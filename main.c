@@ -3,12 +3,15 @@
 #include "interface.h"
 #include "utils.h"
 #include "moradores.h"
+#include "ocorrencias.h"
 int main()
 {
   guardarMoradorVetor();
   guardarAdmVetor();
   guardarApVetor();
   guardarPagamentoVetor();
+  guardarOcorrenciaVetor();
+  
 
   
   areaInterface();

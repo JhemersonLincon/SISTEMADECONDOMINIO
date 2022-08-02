@@ -121,7 +121,7 @@ void listarApartamento(int x, int y){
     if(op != -1) {
       ImprimirApartamento(x, y, apartamentos[op]);
     }
-    opcao = sairListar(x, y);
+    if(op != -1 && tApartamentos > 0) opcao = sairListar(x,y);
   }while(opcao == 0);
 }
 
@@ -143,6 +143,9 @@ int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamento
     tecla = getTecla();
     textcoloreback(WHITE, BLACK);
     gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].num);
+    if(tecla == 27){
+      return -1;
+    }
     if(tecla == 's' || tecla == 'S')opcao++;
     if(tecla == 'w' || tecla == 'W')opcao--;
     if(tecla == 13) return opcao;

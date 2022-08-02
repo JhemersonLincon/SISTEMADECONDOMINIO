@@ -119,7 +119,8 @@ void listarAdms(int x, int y){
               else break;
 
           }
-          opcao = sairListar(x, y);
+          if(opcao != -1 && tAdms > 0) opcao = sairListar(x, y);
+          
       }while(opcao == 0);
     }
 }
@@ -138,11 +139,15 @@ int selecaoAdms(int x , int y, int larg, int alt,Login adms[], int total, int op
         gotoxy(x+1, y+4+i);printf("%*s",-larg, adms[primeiro+i].nome);
     }
     do{
+        gotoxy(x+5, y+4); printf("ESC");
         textcoloreback(BLACK, LIGHT_CYAN);
         gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, adms[opcao].nome);
         tecla = getTecla();
         textcoloreback(WHITE, BLACK);
         gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, adms[opcao].nome);
+        if(tecla == 27){
+          return -1;
+        }
         if(tecla == 's' || tecla == 'S')opcao++;
         if(tecla == 'w' || tecla == 'W')opcao--;
         if(tecla == 13)return opcao;

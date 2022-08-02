@@ -22,7 +22,6 @@ void areaOcorrencia(int x, int y){
   }
 }
 
-
 void abrirOcorrenciaArquivo(){
   fpOcorrencia = fopen("Ocorrencias.txt", "rb+");
   if(fpOcorrencia == NULL){
@@ -32,17 +31,20 @@ void abrirOcorrenciaArquivo(){
     }
   }
 }
+
 void fecharOcorrenciaArquivo(){
   fclose(fpOcorrencia);
 }
+
 void adicionarOcorrencia(Ocorrencia ocorrencia){
   ocorrencias[tOcorrencia] = ocorrencia;
-  abrirPagamentoArquivo();
+  abrirOcorrenciaArquivo();
   fseek(fpOcorrencia, 0, SEEK_END);
   fwrite(&ocorrencia, sizeof(Ocorrencia), 1, fpOcorrencia);
   fecharOcorrenciaArquivo();
   tOcorrencia++;
 }
+
 void guardarOcorrenciaVetor(){
     abrirOcorrenciaArquivo();
     fseek(fpOcorrencia, 0, SEEK_SET);
@@ -72,19 +74,21 @@ void cadastrarOcorrencia(int x, int y){
       else if(i <= 33) ocorrencia.relatosLm[i] = '.';
     }
     ocorrencia.relatosLm[i] = '\0';
+    adicionarOcorrencia(ocorrencia);
     opcao = sairCadastrar(x, y);
   }while(opcao == 0);
 }
 
 void listarOcorrencia(int x, int y){
   int op = -1;
-  int opcao;
+  int opcao = 0;
   do{
     if(tOcorrencia) op = selecaoOcorrencia(x-2, y-4, 45, 17, ocorrencias, tOcorrencia, 0);
     else{gotoxy(37, 7);printf("Nao a Ocorrencias cadastrados");}
-    LimparTela(x-1, y, 10, 5);
     //if(op != -1) ImprimirApartamento(x, y, ocorrencias, 0, op );
-    opcao = sairListar(x, y);
+    if(op != -1 && tOcorrencia > 0) opcao = sairListar(x, y); 
+    else break;
+    LimparTela(x-1, y, 10, 5);
   }while(opcao == 0);
 }
 
@@ -110,6 +114,9 @@ int selecaoOcorrencia(int x , int y, int larg, int alt, Ocorrencia ocorrencias[]
     tecla = getTecla();
     textcoloreback(WHITE, BLACK);
     gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, ocorrencias[opcao].relatosLm);
+    if(tecla = 27){
+      return -1;
+    }
     if(tecla == 's' || tecla == 'S')opcao++;
     if(tecla == 'w' || tecla == 'W')opcao--;
     if(tecla == 13) return opcao;

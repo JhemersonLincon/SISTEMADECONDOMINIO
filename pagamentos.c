@@ -87,7 +87,7 @@ void guardarPagamentoVetor(){
 
 void listarPagamento(int x, int y){
   int op = -1;
-  int opcao;
+  int opcao = 1;
   do{
     if(tPagamentos) op = selecaoPagamento(x-2, y-4, 45, 17, pagamentos, tPagamentos, 0);
     LimparTela(x-1,y, 43, 11);
@@ -95,7 +95,7 @@ void listarPagamento(int x, int y){
     if(op != -1 && tPagamentos > 0) {
       ImprimirPagamento(x, y, pagamentos[op]);  
     }
-    opcao = sairListar(x, y);
+    if(op != -1 && tPagamentos > 0) opcao = sairListar(x, y);
   }while(opcao == 0);
 }
 
@@ -118,6 +118,9 @@ int selecaoPagamento(int x , int y, int larg, int alt,Pagamento pagamentos[], in
         tecla = getTecla();
         textcoloreback(WHITE, BLACK);
         gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, pagamentos[opcao].pagador);
+        if(tecla == 27){
+          return -1;
+        }
         if(tecla == 's' || tecla == 'S')opcao++;
         if(tecla == 'w' || tecla == 'W')opcao--;
         if(tecla == 13)return opcao;

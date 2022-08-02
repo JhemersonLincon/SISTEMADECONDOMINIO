@@ -91,7 +91,8 @@ void listarMoradores(int x, int y){
             if(opcao == 0) apartamentoEmMorador(75, 6, moradores[op].apartamento);
             else if(opcao == 1) excluirMorador(op);
         }
-        opcao = sairListar(x, y);
+        if(op != -1 && tMoradores > 0) opcao = sairListar(x, y);
+        else break;
     }while(opcao == 0);
 }
 // Selecionar o morador na lista de moradores
@@ -130,6 +131,9 @@ int selecaoMoradores(int x , int y, int larg, int alt,Morador moradores[], int t
         tecla = getTecla();
         textcoloreback(WHITE, BLACK);
         gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, moradores[opcao].dono);
+        if(tecla == 27){
+            return -1;
+        }
         if(tecla == 's' || tecla == 'S')opcao++;
         if(tecla == 'w' || tecla == 'W')opcao--;
         if(tecla == 13)return opcao;
