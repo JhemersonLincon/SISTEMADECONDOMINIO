@@ -189,7 +189,7 @@ void areaApartamentosLivres(int x, int y){
   for(i = 0; i < tApartamentos; i++){
     if(i > 20) break;
     if(!apartamentos[i].disp){
-      gotoxy(x+3, y+cont+5);printf("o- %4s   Disponivel %15.2lf", apartamentos[i].num, apartamentos[i].aluguel);
+      gotoxy(x+3, y+cont+5);printf("%c %4s   Disponivel %15.2lf",254, apartamentos[i].num, apartamentos[i].aluguel);
       cont++;
     }
     else cont <= 0? 0: cont--;
