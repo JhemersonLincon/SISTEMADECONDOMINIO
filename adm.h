@@ -26,5 +26,5 @@ int login(int x, int y, int largura, int altura);
 
 void listarAdms(int x, int y);
 int selecaoAdms(int x , int y, int larg, int alt,Login adms[], int total, int opcao);
-
+void excluirAdm(int op);
 #endif // 

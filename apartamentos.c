@@ -75,20 +75,23 @@ void cadastrarAp(int x, int y){
   do{
     textcoloreback(WHITE, BLACK);
     tipoCursor(1);
-    Apartamento apartamento;
-    gotoxy(x, y);  printf("Numero:                         ");
-    gotoxy(x, y+2);printf("Tamanho:                        ");
-    gotoxy(x, y+4);printf("Quant de comodos:               ");                        
-    gotoxy(x, y+6);printf("Disponibilidade(0/1):             ");
-    gotoxy(x, y+8);printf("Preco do Aluguel:               ");  
+    if(login(30, 13, 45, 17)){
+      Apartamento apartamento;
+      gotoxy(x, y);  printf("Numero:                         ");
+      gotoxy(x, y+2);printf("Tamanho:                        ");
+      gotoxy(x, y+4);printf("Quant de comodos:               ");                        
+      gotoxy(x, y+6);printf("Disponibilidade(0/1):             ");
+      gotoxy(x, y+8);printf("Preco do Aluguel:               ");  
 
-    gotoxy(x, y);   printf("Numero: ");                  scanf("%s", &apartamento.num);
-    gotoxy(x, y+2); printf("Tamanho: ");                 scanf("%lf", &apartamento.tamanho);
-    gotoxy(x, y+4); printf("Quant de comodos: ");        scanf("%d", &apartamento.comodos);
-    gotoxy(x, y+6); printf("Disponibilidade(0/1): ");         scanf("%d", &apartamento.disp);
-    gotoxy(x, y+8); printf("Preco do Aluguel: ");        scanf("%lf", &apartamento.aluguel);
-    converterMaiusculo(apartamento.num);
-    adicionarAp(apartamento);
+      gotoxy(x, y);   printf("Numero: ");                  scanf("%s", &apartamento.num);
+      gotoxy(x, y+2); printf("Tamanho: ");                 scanf("%lf", &apartamento.tamanho);
+      gotoxy(x, y+4); printf("Quant de comodos: ");        scanf("%d", &apartamento.comodos);
+      gotoxy(x, y+6); printf("Disponibilidade(0/1): ");         scanf("%d", &apartamento.disp);
+      gotoxy(x, y+8); printf("Preco do Aluguel: ");        scanf("%lf", &apartamento.aluguel);
+      converterMaiusculo(apartamento.num);
+      adicionarAp(apartamento);
+    }
+    else break;
     opcao = sairCadastrar(x, y);
     LimparTela(x-1,y-1, 40, 13);
   }while(opcao == 0);
@@ -127,7 +130,7 @@ void listarApartamento(int x, int y){
 
 int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao){
   Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
-  Caixa(x,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
+  Caixa(x+2,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
   gotoxy(30+11,10-3);printf("LISTA DE APARTAMENTOS");
   textcoloreback(WHITE, BLACK);

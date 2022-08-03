@@ -73,14 +73,16 @@ void cadastrarMorador(int x, int y){
     }while(opcao == 0);
 }
 // mostra na tela o morador selecionado ou a lista inteira
-void ImprimirMorador(int x, int y, Morador morador){
-    if(login(30, 14, 45, 17)){
+int ImprimirMorador(int x, int y, Morador morador){
+    if(login(30, 13, 45, 17)){
         gotoxy(x, y);  printf("Dono: ");                        printf("%s", morador.dono);
         gotoxy(x, y+2);printf("Idade: ");                       printf("%d", morador.idade);
         gotoxy(x, y+4);printf("CPF: ");                         printf("%s", morador.cpf);                     
         gotoxy(x, y+6);printf("Data de pagamento do aluguel: ");printf("%d", morador.datapagamento);
         gotoxy(x, y+8);printf("Telefone: ");                    printf("%s", morador.tel);
+        return 1;
     }
+    return 0;
 }
 
 //listar Moradores
@@ -192,12 +194,11 @@ void pesquisaMoradores(int x, int y){
         for(i=0;i < tMoradores; i++){
             if(strcmp(moradores[i].cpf, cpf) == 0 || strcmp(moradores[i].dono, dono) == 0){
                 LimparTela(x,y, 40, 10);
-                ImprimirMorador(x, y, moradores[i]);
                 encontrado = 1;
                 break;
             }
         }
-        if(encontrado){
+        if(encontrado && ImprimirMorador(x, y, moradores[i])){
             opcao = maisOpcoes(x, y);
             char op[][51] = {"PESQUISAR MAIS", "EXCLUIR MORADOR", "ALTERAR MORADOR", "SAIR"};
             if(opcao == 0) opcao = maisOpcoesArea(75, 6, op, 4);

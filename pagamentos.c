@@ -28,7 +28,7 @@ void areaPagamento(int x, int y){
 void ImprimirPagamento(int x, int y, Pagamento pagamento){
   gotoxy(x, y);  printf("Pagador: ");                        printf("%s", pagamento.pagador);
   gotoxy(x, y+2);printf("Valor Pago: R$");                     printf("%.2lf", pagamento.valorPagamento);
-  gotoxy(x, y+4);printf("Dia do pagamento: ");               printf("%d", pagamento.diaPagamento);                     
+  gotoxy(x, y+4);printf("Data do pagamento: ");               printf("%d", pagamento.diaPagamento);                     
 }
 
 void abrirPagamentoArquivo(){
@@ -70,7 +70,7 @@ void cadastrarPagamento(int x, int y){
 
     gotoxy(x, y);   printf("Pagador: ");                    scanf(" %[^\n]", pagamento.pagador);
     gotoxy(x, y+2); printf("Valor do Pagamento: ");         scanf("%lf", &pagamento.valorPagamento);
-    gotoxy(x, y+4); printf("Dia do Pagamento: ");           scanf(" %d", &pagamento.diaPagamento);
+    gotoxy(x, y+4); printf("Data do Pagamento: ");           scanf(" %d", &pagamento.diaPagamento);
     adicionarPagamento(pagamento);
     opcao = sairCadastrar(x, y);
   }while(opcao == 0);
@@ -184,7 +184,6 @@ void excluirPagamento(int op){
         }
     }
     tPagamentos--;
-    totalGetMoradores();
 }
 
 void alterarPagamento(int x, int y, int op){

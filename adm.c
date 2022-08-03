@@ -40,18 +40,20 @@ void CadastrarAdm(int x, int y){
     gotoxy(x+10,y-3);printf("CADASTRA ADIMINISTRADOR");
     int opcao;
     do{
-      textcoloreback(WHITE, BLACK);
-      Login login;
-      gotoxy(x, y); printf("Administrador:                          ");
-      gotoxy(x,y+2);printf("Login:                                  ");
-      tipoCursor(1);
-      gotoxy(x, y);  printf("Administrador: "); scanf(" %[^\n]", login.nome);
-      gotoxy(x, y+2);printf("Login: "); scanf(" %[^\n]", login.login);
-      int confirmacao = adicionarAdm(login);
-      tipoCursor(0);
-      gotoxy(x, y+12);confirmacao?printf("Administrador Cadastrado..."):printf("Administrador ja existe...");
-      Sleep(500);
-      tipoCursor(1);
+        textcoloreback(WHITE, BLACK);
+      if(login(30, 13, 45, 17)){
+        Login login;
+        gotoxy(x, y); printf("Administrador:                          ");
+        gotoxy(x,y+2);printf("Login:                                  ");
+        tipoCursor(1);
+        gotoxy(x, y);  printf("Administrador: "); scanf(" %[^\n]", login.nome);
+        gotoxy(x, y+2);printf("Login: "); scanf(" %[^\n]", login.login);
+        int confirmacao = adicionarAdm(login);
+        tipoCursor(0);
+        gotoxy(x, y+12);confirmacao?printf("Administrador Cadastrado..."):printf("Administrador ja existe...");
+        Sleep(500);
+        tipoCursor(1);
+      }
       opcao = sairCadastrar(x, y);
     }while(opcao == 0);
 
@@ -92,12 +94,15 @@ void areaAdm(int x, int y){
 }
 
 void guardarAdmVetor(){
-
+  Login adm;
     abrirAdmArquivo();
     fseek(fpAdm, 0, SEEK_SET);
 
-    while(fread(&adms[tAdms], sizeof(Login), 1, fpAdm)){
-      tAdms++;
+    while(fread(&adm, sizeof(Login), 1, fpAdm)){
+      if(strcmp(adm.nome, " ") || strcmp(adm.login, " ")){
+        adms[tAdms] = adm;
+        tAdms++;
+      }
     }
     fecharAdmArquivo();
 }
@@ -113,10 +118,16 @@ void listarAdms(int x, int y){
               ImprimirAdm(x, y, adms[op]);  
               opcao = maisOpcoes(x, y);
               if(opcao == 0){
-                  char op[][51] = {"APARTAMENTO ALUGADO", "EXCLUIR MORADOR", "SAIR"};
-                  opcao = maisOpcoesArea(75, 6, op, 3);
+                  char op[][51] = {"EXCLUIR ADMINISTRADOR", "SAIR"};
+                  opcao = maisOpcoesArea(75, 6, op, 2);
               }
               else break;
+              switch(opcao){
+                case 0: 
+                  excluirAdm(op);
+                  break;
+                default: break; 
+            }
 
           }
           if(opcao != -1 && tAdms > 0) opcao = sairListar(x, y);
@@ -215,10 +226,34 @@ int login(int x, int y, int largura, int altura){
     for(i = 0; i <  tAdms; i++){
       if(!(strcmp(adms[i].nome, user.usuario)) && !(strcmp(adms[i].login, user.senha))){
         tipoCursor(0);
-        LimparTela(x-1,y-4,largura-4,altura-5);
+        LimparTela(x-1,y-4,largura-4,altura-7);
 
         return 1;
       }
     }
   }
+}
+
+void excluirAdm(int op){
+    int i, j;
+    if(login(30, 13, 45, 17)){
+        Login aux;
+        abrirAdmArquivo();
+        while(fread(&aux, sizeof(Login), 1, fpAdm)){
+          if(!strcmp(aux.nome, adms[op].nome))break;
+        }
+        strcpy(adms[op].nome, " ");
+        strcpy(adms[op].login, " ");
+        fseek(fpAdm, -sizeof(Login), SEEK_CUR);
+        fwrite(&adms[op], sizeof(Login), 1, fpAdm);
+        fecharAdmArquivo();   
+        for(i = op; i < tAdms+2; i++){
+          for(j = i+1; j < tAdms; j++){
+            aux = adms[i];
+            adms[i] = adms[j];
+            adms[j] = aux;
+          }
+        }
+    }
+    tAdms--;
 }

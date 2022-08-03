@@ -12,7 +12,6 @@ int main()
   guardarPagamentoVetor();
   guardarOcorrenciaVetor();
   
-
   
   areaInterface();
   areaMenu();
