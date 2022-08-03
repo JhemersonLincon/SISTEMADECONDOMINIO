@@ -1,5 +1,5 @@
 #include "moradores.h"
-#include "interface.h"
+
 int tMoradores = 0;
 Morador moradores[100];
 
@@ -19,12 +19,18 @@ void fecharMoradorArquivo(){
 }
 void adicionarMorador(Morador morador){
     moradores[tMoradores] = morador;
+    Pagamento pagamento;
+
+    strcpy(pagamento.pagador,morador.dono);
+    pagamento.valorPagamento = morador.apartamento.aluguel;
+    pagamento.diaPagamento = morador.datapagamento;
+
+    adicionarPagamento(pagamento);
 
     abrirMoradorArquivo();
     fseek(fpMorador, 0, SEEK_END);
     fwrite(&morador, sizeof(Morador), 1, fpMorador);
     fecharMoradorArquivo();
-
     tMoradores++;
 }
 
@@ -42,22 +48,24 @@ void cadastrarMorador(int x, int y){
             gotoxy(x, y);  printf("Dono:                           ");
             gotoxy(x, y+2);printf("Idade:                          ");
             gotoxy(x, y+4);printf("CPF:                            ");                        
-            gotoxy(x, y+6);printf("Data de pagamento:   ");
-            gotoxy(x, y+8);printf("Telefone:                       ");  
-            gotoxy(x, y+10);printf("Apartamento:                   ");  
+            gotoxy(x, y+6);printf("Telefone:                       ");  
+            gotoxy(x, y+8);printf("Apartamento:                   ");  
 
             tipoCursor(1);
             gotoxy(x, y);  printf("Dono: ");                         scanf(" %[^\n]", morador.dono);
             gotoxy(x, y+2);printf("Idade: ");                        scanf(" %d", &morador.idade);
             gotoxy(x, y+4);printf("CPF: ");                          scanf(" %s", morador.cpf);
-            gotoxy(x, y+6);printf("Data de pagamento: ");            scanf(" %d", &morador.datapagamento);
-            gotoxy(x, y+8);printf("Telefone: ");                     scanf(" %s", morador.tel);
-            gotoxy(x, y+10);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
+            gotoxy(x, y+6);printf("Telefone: ");                     scanf(" %s", morador.tel);
+            gotoxy(x, y+8);printf("Apartamento: ");                 scanf(" %s", morador.apartamento.num);
+
+            morador.datapagamento = Datas(90,1);
+
             converterMaiusculo(morador.apartamento.num);
             alterarDisp(morador.apartamento.num, 1);
             morador.apartamento = puxarAp(morador.apartamento);
             adicionarMorador(morador);
             totalGetMoradores();
+            areaApartamentosLivres(75, 6);
         }
         else {gotoxy(x, y);printf("Sem apartamentos disponiveis");}
         opcao = sairCadastrar(x, y);
@@ -66,11 +74,13 @@ void cadastrarMorador(int x, int y){
 }
 // mostra na tela o morador selecionado ou a lista inteira
 void ImprimirMorador(int x, int y, Morador morador){
-    gotoxy(x, y);  printf("Dono: ");                        printf("%s", morador.dono);
-    gotoxy(x, y+2);printf("Idade: ");                       printf("%d", morador.idade);
-    gotoxy(x, y+4);printf("CPF: ");                         printf("%s", morador.cpf);                     
-    gotoxy(x, y+6);printf("Data de pagamento do aluguel: ");printf("%d", morador.datapagamento);
-    gotoxy(x, y+8);printf("Telefone: ");                    printf("%s", morador.tel);
+    if(login(30, 14, 45, 17)){
+        gotoxy(x, y);  printf("Dono: ");                        printf("%s", morador.dono);
+        gotoxy(x, y+2);printf("Idade: ");                       printf("%d", morador.idade);
+        gotoxy(x, y+4);printf("CPF: ");                         printf("%s", morador.cpf);                     
+        gotoxy(x, y+6);printf("Data de pagamento do aluguel: ");printf("%d", morador.datapagamento);
+        gotoxy(x, y+8);printf("Telefone: ");                    printf("%s", morador.tel);
+    }
 }
 
 //listar Moradores
@@ -84,12 +94,22 @@ void listarMoradores(int x, int y){
             ImprimirMorador(x, y, moradores[op]);  
             opcao = maisOpcoes(x, y);
             if(opcao == 0){
-                char op[][51] = {"APARTAMENTO", "EXCLUIR MORADOR", "SAIR"};
-                opcao = maisOpcoesArea(75, 6, op, 3);
+                char op[][51] = {"APARTAMENTO", "EXCLUIR MORADOR","ALTERAR MORADOR", "SAIR"};
+                opcao = maisOpcoesArea(75, 6, op, 4);
             }
             else break;
-            if(opcao == 0) apartamentoEmMorador(75, 6, moradores[op].apartamento);
-            else if(opcao == 1) excluirMorador(op);
+            switch(opcao){
+                case 0:
+                    apartamentoEmMorador(75, 6, moradores[op].apartamento);
+                    break;
+                case 1: 
+                    excluirMorador(op);
+                    break;
+                case 2:
+                    alterarMorador(30, 10, op);
+                    break;
+                default: break; 
+            }
         }
         if(op != -1 && tMoradores > 0) opcao = sairListar(x, y);
         else break;
@@ -122,7 +142,7 @@ int selecaoMoradores(int x , int y, int larg, int alt,Morador moradores[], int t
     int i;
     int primeiro = 0;
     textcoloreback(WHITE, BLACK);
-    for(i = 0; i < total; i++){
+    for(i = 0; i < alt-3; i++){
         gotoxy(x+1, y+4+i);printf("%*s",-larg, moradores[primeiro+i].dono);
     }
     do{
@@ -139,16 +159,16 @@ int selecaoMoradores(int x , int y, int larg, int alt,Morador moradores[], int t
         if(tecla == 13)return opcao;
         if(opcao < 0) opcao = 0;
         if(opcao > total-1) opcao = total-1;
-        if(opcao > primeiro + alt-1){
+        if(opcao > primeiro + alt-4){
             primeiro++;
-            for(i = 0; i < alt; i++){
-               gotoxy(x+1, y+1+i);printf("%*s",-larg, moradores[primeiro+i].dono);
+            for(i = 0; i < alt-3; i++){
+               gotoxy(x+1, y+4+i);printf("%*s",-larg, moradores[primeiro+i].dono);
             }
         }
         else if(opcao < primeiro){
                 primeiro--;
-            for(i = 0; i < alt; i++){
-                gotoxy(x+1, y+1+i);printf("%*s",-larg, moradores[primeiro+i].dono);
+            for(i = 0; i < alt-3; i++){
+                gotoxy(x+1, y+4+i);printf("%*s",-larg, moradores[primeiro+i].dono);
             }
         }
     }while(1);
@@ -248,7 +268,6 @@ void excluirMorador(int op){
     totalGetMoradores();
     strcpy(moradores[op].cpf, " ");
 }
-
 void alterarMorador(int x, int y, int op){
     Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
@@ -260,12 +279,12 @@ void alterarMorador(int x, int y, int op){
     while(fread(&morador, sizeof(Morador), 1, fpMorador)){
         if(!strcmp(morador.dono, moradores[op].dono))break;
     }
-    gotoxy(x, y);  printf("Dono:                           ");
-    gotoxy(x, y+2);printf("Idade:                          ");
-    gotoxy(x, y+4);printf("CPF:                            ");                        
-    gotoxy(x, y+6);printf("Data de pagamento:   ");
-    gotoxy(x, y+8);printf("Telefone:                       ");  
-    gotoxy(x, y+10);printf("Apartamento:                   ");  
+    gotoxy(x, y);  printf("Dono:                                     ");
+    gotoxy(x, y+2);printf("Idade:                                    ");
+    gotoxy(x, y+4);printf("CPF:                                      ");                        
+    gotoxy(x, y+6);printf("Data de pagamento:                        ");
+    gotoxy(x, y+8);printf("Telefone:                                 ");  
+    gotoxy(x, y+10);printf("Apartamento:                             ");  
 
     tipoCursor(1);
     gotoxy(x, y);  printf("Dono: ");                         scanf(" %[^\n]", morador.dono);

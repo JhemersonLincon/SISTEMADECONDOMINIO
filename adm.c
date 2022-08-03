@@ -129,7 +129,7 @@ int selecaoAdms(int x , int y, int larg, int alt,Login adms[], int total, int op
     Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
     Caixa(30,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
     textcoloreback(BLACK, LIGHT_CYAN);
-    gotoxy(30+11,10-3);printf("LISTA DE MORADORES");
+    gotoxy(30+11,10-3);printf("LISTA DE ADMINISTRADORES");
     textcoloreback(WHITE, BLACK);
     char tecla;
     int i;
@@ -139,7 +139,6 @@ int selecaoAdms(int x , int y, int larg, int alt,Login adms[], int total, int op
         gotoxy(x+1, y+4+i);printf("%*s",-larg, adms[primeiro+i].nome);
     }
     do{
-        gotoxy(x+5, y+4); printf("ESC");
         textcoloreback(BLACK, LIGHT_CYAN);
         gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, adms[opcao].nome);
         tecla = getTecla();
@@ -170,24 +169,26 @@ int selecaoAdms(int x , int y, int larg, int alt,Login adms[], int total, int op
 
 //faz o sistema de login executar
 int login(int x, int y, int largura, int altura){
-  Caixa(x-2,y-7,largura,altura,0, LIGHT_CYAN, BLACK);
+
+  LimparTela(x,y-4, 30,8);
   //Caixa(x,y-5,largura-4,0,0, LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(LIGHT_CYAN, BLACK);
-  gotoxy(x, y-5);printf("FAZER LOGIN");
+  gotoxy(x, y-3);printf("FAZER LOGIN");
   int i;
   int xO[] = {x, x+20};
-  int yO[] = {y+8, y+8};
+  int yO[] = {y+9, y+9};
   char op[][51] = {"FAZER LOGIN", "SAIR"};
   int opcao = Menu(xO, yO, op, 2, 1);
   textcoloreback(LIGHT_CYAN, BLACK);
-  if(opcao == 1){
-    LimparTela(x,y, 50,8);
+  if(opcao == 1 || opcao == -1){
+    LimparTela(x,y, 35,8);
     return 0;
   }
   textcoloreback(WHITE, BLACK);
   gotoxy(x, y);printf("Usuario de acesso: ");
   gotoxy(x, y+3);printf("Digite senha de acesso: ");
   while(1){
+    tipoCursor(1);
     usuario user;
     int cont = 0;
     LimparTela(x+19,y, 10,0);
@@ -203,6 +204,7 @@ int login(int x, int y, int largura, int altura){
       }
       else if(user.senha[cont] == 13){
         user.senha[cont] = '\0';
+        tipoCursor(0);
         break;
       }
       else if(user.senha[cont] != 8){
@@ -212,7 +214,9 @@ int login(int x, int y, int largura, int altura){
     }while(user.senha[cont] != 27);
     for(i = 0; i <  tAdms; i++){
       if(!(strcmp(adms[i].nome, user.usuario)) && !(strcmp(adms[i].login, user.senha))){
-        LimparTela(x-2,y-7,largura,altura);
+        tipoCursor(0);
+        LimparTela(x-1,y-4,largura-4,altura-5);
+
         return 1;
       }
     }

@@ -6,7 +6,7 @@
 #include "interface.h"
 #include "utils.h"
 #include "apartamentos.h"
-
+#include "pagamentos.h"
 typedef struct{
     char dono[51];
     int idade;

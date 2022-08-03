@@ -79,7 +79,7 @@ void LimparTela(int x, int y, int largura, int altura){
 void areaInterface(){
   Caixa(1, 1, 115, 26, 1, LIGHT_CYAN, BLACK);//Caixa principal
   Caixa(1, 0, 115, 1,  1,LIGHT_CYAN, BLACK);//caixa do cabeçalho
-  Data(90, 1);
+  Datas(90, 1);
   gotoxy(3, 1);printf("SISTEMA DE CONDOMINIO");
   Caixa(3, 25, 111, 1, 0, LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);

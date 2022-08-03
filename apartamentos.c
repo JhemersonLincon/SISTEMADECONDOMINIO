@@ -117,7 +117,7 @@ void listarApartamento(int x, int y){
   do{
     if(tApartamentos) op = selecaoApartamento(x-2, y-4, 45, 17, apartamentos, tApartamentos, 0);
     else{gotoxy(37, 7);printf("Nao a apartamento cadastrados");}
-    LimparTela(x-1, y, 40, 5);
+    LimparTela(x-1, y, 40, 9);
     if(op != -1) {
       ImprimirApartamento(x, y, apartamentos[op]);
     }
@@ -127,14 +127,14 @@ void listarApartamento(int x, int y){
 
 int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamentos[], int total, int opcao){
   Caixa(x, y, larg, alt,0,LIGHT_CYAN, BLACK);
-  Caixa(30,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
+  Caixa(x,10-4 ,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
   gotoxy(30+11,10-3);printf("LISTA DE APARTAMENTOS");
   textcoloreback(WHITE, BLACK);
   char tecla;
   int i;
   int primeiro = 0;
-  for(i = 0; i < total; i++){
+  for(i = 0; i < alt-3; i++){
     gotoxy(x+1, y+4+i);printf("%s", apartamentos[primeiro+i].num);
   }
   do{
@@ -143,24 +143,23 @@ int selecaoApartamento(int x , int y, int larg, int alt, Apartamento apartamento
     tecla = getTecla();
     textcoloreback(WHITE, BLACK);
     gotoxy(x+1, y+4+opcao - primeiro);printf("%*s",-larg, apartamentos[opcao].num);
-    if(tecla == 27){
-      return -1;
-    }
+
+    if(tecla == 27)return -1;
     if(tecla == 's' || tecla == 'S')opcao++;
     if(tecla == 'w' || tecla == 'W')opcao--;
     if(tecla == 13) return opcao;
     if(opcao < 0) opcao = 0;
     if(opcao > total-1) opcao = total-1;
-    if(opcao > primeiro + alt-1){
+    if(opcao > primeiro + alt-4){
       primeiro++;
-      for(i = 0; i < alt; i++){
-          gotoxy(x+1, y+1+i);printf("%*s",-larg, apartamentos[primeiro+i].num);
+      for(i = 0; i < alt-3; i++){
+          gotoxy(x+1, y+4+i);printf("%*s",-larg, apartamentos[primeiro+i].num);
       }
     }
     else if(opcao < primeiro){
       primeiro--;
-      for(i = 0; i < alt; i++){
-        gotoxy(x+1, y+1+i);printf("%*s",-larg, apartamentos[primeiro+i].num);
+      for(i = 0; i < alt-3; i++){
+        gotoxy(x+1, y+4+i);printf("%*s",-larg, apartamentos[primeiro+i].num);
       } 
     }
   }while(1);
@@ -181,12 +180,13 @@ void areaApartamentosLivres(int x, int y){
   Caixa(x, y, 40, 17, 0,LIGHT_CYAN, BLACK);
   Caixa(x+3, y+1, 35, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
-  gotoxy(x+9, y+2);printf("APARTAMENTOS DISPONIVEIS");
+  gotoxy(x+9, y+2);printf("APARTAMENTOS DISPON%cVEIS", 214);
   textcoloreback(LIGHT_CYAN, BLACK);
   int i, cont = 0;
   for(i = 0; i < tApartamentos; i++){
+    if(i > 20) break;
     if(!apartamentos[i].disp){
-      gotoxy(x+3, y+cont+5);printf("o- %s %*s", apartamentos[i].num, +13,"Disponivel");
+      gotoxy(x+3, y+cont+5);printf("o- %4s   Disponivel %15.2lf", apartamentos[i].num, apartamentos[i].aluguel);
       cont++;
     }
     else cont <= 0? 0: cont--;

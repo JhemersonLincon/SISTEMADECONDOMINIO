@@ -18,13 +18,18 @@ void tipoCursor(int cursor){
 
 }
 // Printa na tela a data atual
-void Data(int x, int y){
+int Datas(int x, int y){
+  int date;
   char meses[][51] = {"Janeiro", "Fevereiro", "Março", "Abril", "Junho", "Julho", "Agosto", "Setembro", "Outubro","Novembro", "Dezembro"};
   time_t mytime = time(NULL);
   struct tm tm = *localtime(&mytime);
   //gotoxy(85, 3);printf("%d : %d : %d",tm.tm_hour,tm.tm_min,tm.tm_sec);
   gotoxy(x, y);printf("Brasil - %s %d, %d",meses[tm.tm_mon-1], tm.tm_mday, tm.tm_year+1900);
+  date = (tm.tm_mday*1000000) + ((tm.tm_mon ) * 10000) + (tm.tm_year+1900);
+  return date;
 }
+
+
 int getTecla(){
     int ch;
     ch = getch();
@@ -78,7 +83,7 @@ int maisOpcoesArea(int x, int y,char op[][51], int t){
   Caixa(x, y, 40, 17, 0,LIGHT_CYAN, BLACK);
   Caixa(x+3, y+1, 35, 1, 0,LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
-  gotoxy(x+4, y+2);printf("OPCOES");
+  gotoxy(x+4, y+2);printf("OP%c%cES", 128, 229);
   textcoloreback(LIGHT_CYAN, BLACK);
   int opcao;
   int xO[] = {x+4, x+4, x+4, x+4};

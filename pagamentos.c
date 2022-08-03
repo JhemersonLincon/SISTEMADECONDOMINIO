@@ -77,9 +77,13 @@ void cadastrarPagamento(int x, int y){
 }
 void guardarPagamentoVetor(){
     abrirPagamentoArquivo();
+    Pagamento pagamento;
     fseek(fpPagamento, 0, SEEK_SET);
-    while(fread(&pagamentos[tPagamentos], sizeof(Pagamento), 1, fpPagamento)){
-      tPagamentos++;
+    while(fread(&pagamento, sizeof(Pagamento), 1, fpPagamento)){
+      if(strcmp(pagamento.pagador, " ") || pagamento.valorPagamento){
+        pagamentos[tPagamentos] = pagamento;
+        tPagamentos++;
+      }
     }
     fecharPagamentoArquivo();
 }
@@ -94,6 +98,21 @@ void listarPagamento(int x, int y){
 
     if(op != -1 && tPagamentos > 0) {
       ImprimirPagamento(x, y, pagamentos[op]);  
+        opcao = maisOpcoes(x, y);
+        if(opcao == 0){
+          char op[][51] = {"EXCLUIR PAGAMENTO","ALTERAR PAGAMENTO", "SAIR"};
+          opcao = maisOpcoesArea(75, 6, op, 3);
+        }
+        else break;
+        switch(opcao){
+          case 0: 
+            excluirPagamento(op);
+            break;
+          case 1:
+            alterarPagamento(30, 10, op);
+            break;
+          default: break; 
+        }
     }
     if(op != -1 && tPagamentos > 0) opcao = sairListar(x, y);
   }while(opcao == 0);
@@ -109,7 +128,7 @@ int selecaoPagamento(int x , int y, int larg, int alt,Pagamento pagamentos[], in
     int i;
     int primeiro = 0;
     textcoloreback(WHITE, BLACK);
-    for(i = 0; i < total; i++){
+    for(i = 0; i < alt-3; i++){
         gotoxy(x+1, y+4+i);printf("%*s",-larg, pagamentos[primeiro+i].pagador);
     }
     do{
@@ -126,17 +145,70 @@ int selecaoPagamento(int x , int y, int larg, int alt,Pagamento pagamentos[], in
         if(tecla == 13)return opcao;
         if(opcao < 0) opcao = 0;
         if(opcao > total-1) opcao = total-1;
-        if(opcao > primeiro + alt-1){
+        if(opcao > primeiro + alt-4){
             primeiro++;
-            for(i = 0; i < alt; i++){
-               gotoxy(x+1, y+1+i);printf("%*s",-larg, pagamentos[primeiro+i].pagador);
+            for(i = 0; i < alt-3; i++){
+               gotoxy(x+1, y+4+i);printf("%*s",-larg, pagamentos[primeiro+i].pagador);
             }
         }
         else if(opcao < primeiro){
                 primeiro--;
-            for(i = 0; i < alt; i++){
-                gotoxy(x+1, y+1+i);printf("%*s",-larg, pagamentos[primeiro+i].pagador);
+            for(i = 0; i < alt-3; i++){
+                gotoxy(x+1, y+4+i);printf("%*s",-larg, pagamentos[primeiro+i].pagador);
             }
         }
     }while(1);
+}
+
+void excluirPagamento(int op){
+    int i, j;
+    if(login(30, 13, 45, 17)){
+        Pagamento aux;
+        abrirPagamentoArquivo();
+        while(fread(&aux, sizeof(Pagamento), 1, fpPagamento)){
+            if(!strcmp(aux.pagador, pagamentos[op].pagador))break;
+        }
+        strcpy(pagamentos[op].pagador, " ");
+        pagamentos[op].diaPagamento = 0;
+        pagamentos[op].valorPagamento = 0;
+
+        fseek(fpPagamento, -sizeof(Pagamento), SEEK_CUR);
+        fwrite(&pagamentos[op], sizeof(Pagamento), 1, fpPagamento);
+        fecharPagamentoArquivo();   
+        for(i = op; i < tPagamentos+2; i++){
+          for(j = i+1; j < tPagamentos; j++){
+            aux = pagamentos[i];
+            pagamentos[i] = pagamentos[j];
+            pagamentos[j] = aux;
+          }
+        }
+    }
+    tPagamentos--;
+    totalGetMoradores();
+}
+
+void alterarPagamento(int x, int y, int op){
+    Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
+    textcoloreback(BLACK, LIGHT_CYAN);
+    gotoxy(x+10,y-3);printf("ALTERAR PAGAMENTO");
+    int opcao;
+    textcoloreback(WHITE, BLACK);
+    Pagamento pagamento;
+    abrirPagamentoArquivo();
+    while(fread(&pagamento, sizeof(Pagamento), 1, fpPagamento)){
+        if(!strcmp(pagamento.pagador, pagamentos[op].pagador))break;
+    }
+    textcoloreback(WHITE, BLACK);
+    tipoCursor(1);
+    gotoxy(x, y);  printf("Pagador:                      ");
+    gotoxy(x, y+2);printf("Valor do Pagamento:           ");
+    gotoxy(x, y+4);printf("Dia do Pagamento:             ");
+
+    gotoxy(x, y);   printf("Pagador: ");                    scanf(" %[^\n]", pagamento.pagador);
+    gotoxy(x, y+2); printf("Valor do Pagamento: ");         scanf("%lf", &pagamento.valorPagamento);
+    gotoxy(x, y+4); printf("Dia do Pagamento: ");           scanf(" %d", &pagamento.diaPagamento);
+    pagamentos[op] = pagamento;
+    fseek(fpPagamento, -sizeof(Pagamento), SEEK_CUR);
+    fwrite(&pagamento, sizeof(Morador), 1, fpPagamento);
+    fecharPagamentoArquivo();
 }
