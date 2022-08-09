@@ -85,6 +85,7 @@ void areaInterface(){
   textcoloreback(BLACK, LIGHT_CYAN);
   gotoxy(45, 26);printf("SISTEMA By ISAC E COMPANHIA");
   textcoloreback(LIGHT_CYAN, BLACK);
+  gotoxy(3, 4); printf("PS: ESC FECHA AS ABAS");
   totalGetMoradores();
 }
 // funcao da area do Menu

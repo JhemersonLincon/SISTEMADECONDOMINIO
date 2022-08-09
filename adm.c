@@ -19,7 +19,6 @@ void abrirAdmArquivo(){
 void fecharAdmArquivo(){
   fclose(fpAdm);
 }
-
 int adicionarAdm(Login adm){
   int i;
   for(i = 0;i < tAdms; i++){
@@ -58,7 +57,6 @@ void CadastrarAdm(int x, int y){
     }while(opcao == 0);
 
 }
-
 void ImprimirAdm(int x, int y, Login login){
   Caixa(x,y-4,40,1,0, LIGHT_CYAN, LIGHT_CYAN);
   textcoloreback(BLACK, LIGHT_CYAN);
@@ -227,7 +225,6 @@ int login(int x, int y, int largura, int altura){
       if(!(strcmp(adms[i].nome, user.usuario)) && !(strcmp(adms[i].login, user.senha))){
         tipoCursor(0);
         LimparTela(x-1,y-4,largura-4,altura-7);
-
         return 1;
       }
     }
